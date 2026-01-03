@@ -1,0 +1,26 @@
+/* STOPKA */
+
+.site-footer {
+    padding: 6rem 0 1.5rem;
+}
+
+.site-footer .footer-inner {
+    row-gap: 6rem;
+    padding: 0 2em 2em;
+}
+
+.site-footer .site-navigation {
+    flex: 1 1 33%;
+    order: 1;
+}
+
+.site-footer .site-branding {
+    order: 2;
+    flex: 0 0 33%;
+}
+
+.site-footer .footer-inner .copyright {
+    order: 3;
+    flex: 1 1 100%;
+    justify-content: center;
+}

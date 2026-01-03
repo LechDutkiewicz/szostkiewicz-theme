@@ -1,0 +1,101 @@
+/* ARCHIWUM OBRAZÓW */
+
+.archive .type-obraz .elementor-element {
+    --display: flex;
+    --flex-direction: column;
+    --container-widget-width: calc((1 - var(--container-widget-flex-grow)) * 100%);
+    --container-widget-height: initial;
+    --container-widget-flex-grow: 0;
+    --container-widget-align-self: initial;
+    --flex-wrap-mobile: wrap;
+    --justify-content: center;
+    --align-items: center;
+    --gap: 60px 0px;
+    --row-gap: 60px;
+    --column-gap: 0px;
+}
+
+/* GRID OBRAZÓW */
+
+.painting-item + .painting-item {
+    margin-top: 3em;
+}
+
+.painting-item {
+    display: grid;
+    grid-template-areas:
+        "image image"
+        "title price"
+        "dimensions dimensions"
+        "description description";
+    grid-template-rows: repeat(4, auto);
+    grid-template-columns: 3fr 1fr;
+    overflow: hidden;
+    color: var(--e-global-color-primary);
+}
+
+@media screen and (min-width: 768px) {
+    .featured-paintings {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6em;
+        margin: 2em 0;
+    }
+
+    .painting-item {
+        grid-template-rows: 330px repeat(3, auto);
+        height: 100%;
+    }
+
+    .painting-item + .painting-item {
+        margin-top: 0;
+    }
+}
+
+.painting-item img {
+    grid-area: image;
+    align-self: center;
+    justify-self: center;
+    margin-bottom: 1.2rem;
+}
+
+.painting-item h3 {
+    grid-area: title;
+    margin: 0;
+    align-self: flex-end;
+}
+
+.painting-item .dimensions {
+    grid-area: dimensions;
+    font-size: var(--text-small-font-size);
+    margin-top: .25em;
+}
+
+.painting-item .description {
+    grid-area: description;
+    margin: .75em 0 0;
+    font-size: var(--text-small-font-size);
+    align-self: start;
+}
+
+.painting-item .price {
+    grid-area: price;
+    font-size: var(--h6-font-size);
+    font-family: var(--e-global-typography-accent-font-family);
+    color: var(--e-global-color-accent);
+    text-align: right;
+}
+
+@media screen and (min-width: 768px) {
+    .painting-item .dimensions {
+        font-size: var(--text-small-font-size-desktop);
+    }
+
+    .painting-item .description {
+        font-size: var(--text-small-font-size-desktop);
+    }
+
+    .painting-item .price {
+        font-size: var(--h6-font-size-desktop);
+    }
+}

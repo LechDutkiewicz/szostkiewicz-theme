@@ -1,30 +1,31 @@
+/* HEADER */
+
 .site-header {
-	padding-left: 1em;
-	padding-right: 1em;
+    padding-block-start: .75rem;
+    padding-block-end: .75rem;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 .site-header .header-inner {
-	padding-inline-start: 0;
-	padding-inline-end: 0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+}
+
+.site-header .site-title {
+    font-size: 1rem;
 }
 
 @media screen and (min-width: 768px) {
-	.site-header {
-		padding-left: 2em;
-		padding-right: 2em;
-	}
+    .site-header {
+        padding-left: 2em;
+        padding-right: 2em;
+    }
 }
 
 @media screen and (min-width: 1024px) {
-	.site-header {
-		padding-left: 4em;
-		padding-right: 4em;
-	}
-}
-
-/* stopka */
-
-.site-footer .footer-inner {
-	row-gap: 2em;
-	padding: 0 2em 2em;
+    .site-header {
+        padding-left: 4em;
+        padding-right: 4em;
+    }
 }
