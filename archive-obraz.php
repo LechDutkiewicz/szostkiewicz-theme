@@ -1,15 +1,17 @@
 <?php
-// Wymusza użycie Elementor header/footer
+/**
+ * Archive template for Obraz post type
+ *
+ * @package Hello_Theme_Child
+ */
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
-// Sprawdź czy Elementor ma header/footer
-$elementor_header = get_option('elementor_header_template_id');
-$elementor_footer = get_option('elementor_footer_template_id');
+$use_elementor = is_using_elementor_header_footer();
 
-if ($elementor_header || $elementor_footer) {
-    // Użyj canvas template
+if ($use_elementor) {
     get_header('elementor');
 } else {
     get_header();
@@ -26,28 +28,8 @@ if ($elementor_header || $elementor_footer) {
 
             <?php if (have_posts()) : ?>
                 <div class="featured-paintings archive-paintings">
-                    <?php while (have_posts()) : the_post(); 
-                                    // opisy
-                        $dimensions = get_field('o_obrazie')['wymiary_obrazu'];
-                        $price = get_field('o_obrazie')['cena_obrazu'];
-                        $description = get_field('o_obrazie')['opis_obrazu'];
-                        $first_image = $gallery ? $gallery[0] : null;
-                        ?>
-                        <a class="painting-item" href="<?php the_permalink(); ?>">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <?php the_post_thumbnail('medium', array("class" => "shadow-black")); ?>
-                            <?php endif; ?>
-                            <h3 class="h6"><?php the_title(); ?></h3>
-                            <?php if ($dimensions) : ?>
-                                <span class="dimensions"><?php echo $dimensions; ?></span>
-                            <?php endif; ?>
-                            <?php if ($price) : ?>
-                                <span class="price"><?php echo $price; ?></span>
-                            <?php endif; ?>
-                            <?php if ($description) : ?>
-                                <div class="description"><?php echo $description; ?></div>
-                            <?php endif; ?>
-                        </a>
+                    <?php while (have_posts()) : the_post(); ?>
+                        <?php render_painting_card(); ?>
                     <?php endwhile; ?>
                 </div>
 
@@ -67,7 +49,7 @@ if ($elementor_header || $elementor_footer) {
 </main>
 
 <?php
-if ($elementor_header || $elementor_footer) {
+if ($use_elementor) {
     get_footer('elementor');
 } else {
     get_footer();

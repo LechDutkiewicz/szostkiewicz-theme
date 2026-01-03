@@ -1,0 +1,9 @@
+/* NAWIGACJA */
+
+.site-navigation ul.menu {
+    column-gap: 2rem;
+}
+
+.site-navigation ul.menu li a {
+    padding: 0;
+}
