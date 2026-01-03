@@ -45,12 +45,18 @@ function render_painting_card($post_id = null, $args = []) {
         'link' => true,
         'image_size' => 'medium',
         'image_class' => 'shadow-black',
+        'slider_mode' => false,
     ];
 
     $args = wp_parse_args($args, $defaults);
 
+    $wrapper_class = $args['slider_mode'] ? 'swiper-slide' : '';
     $tag = $args['link'] ? 'a' : 'div';
     $href = $args['link'] ? sprintf(' href="%s"', esc_url(get_permalink($post_id))) : '';
+
+    if ($args['slider_mode']) {
+        echo '<div class="swiper-slide">';
+    }
 
     printf('<%s class="painting-item"%s>', $tag, $href);
 
@@ -75,6 +81,10 @@ function render_painting_card($post_id = null, $args = []) {
     }
 
     printf('</%s>', $tag);
+
+    if ($args['slider_mode']) {
+        echo '</div>';
+    }
 }
 
 /**

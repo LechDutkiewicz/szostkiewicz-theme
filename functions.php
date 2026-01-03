@@ -43,6 +43,16 @@ define('CUSTOM_FIELDS_PATH', CHILD_THEME_PATH . 'lib/custom_fields/');
 require_once CHILD_THEME_PATH . 'inc/template-functions.php';
 
 /**
+ * Deregister jQuery (not used in theme)
+ */
+function deregister_jquery() {
+    if (!is_admin()) {
+        wp_deregister_script('jquery');
+    }
+}
+add_action('wp_enqueue_scripts', 'deregister_jquery', 1);
+
+/**
  * Enqueue child theme assets
  */
 function child_assets() {
@@ -57,6 +67,7 @@ function child_assets() {
         'footer',
         'sections',
         'archive',
+        'featured-paintings',
         'single-obraz',
         'home',
     ];
@@ -72,6 +83,15 @@ function child_assets() {
             HELLO_ELEMENTOR_CHILD_VERSION
         );
     }
+
+    // Enqueue JavaScript files
+    wp_enqueue_script(
+        'child-theme-featured-paintings',
+        get_stylesheet_directory_uri() . '/js/featured-paintings.js',
+        [],
+        HELLO_ELEMENTOR_CHILD_VERSION,
+        true
+    );
 }
 add_action('wp_enqueue_scripts', 'child_assets', 100);
 
@@ -106,10 +126,25 @@ function featured_paintings_shortcode($atts) {
 
     ob_start();
     ?>
-    <div class="featured-paintings">
-        <?php while ($featured_paintings->have_posts()) : $featured_paintings->the_post(); ?>
-            <?php render_painting_card(); ?>
-        <?php endwhile; ?>
+    <div class="featured-paintings-wrapper">
+        <!-- Mobile: Swiper Slider -->
+        <div class="swiper featured-paintings-swiper featured-paintings-mobile">
+            <div class="swiper-wrapper">
+                <?php while ($featured_paintings->have_posts()) : $featured_paintings->the_post(); ?>
+                    <?php render_painting_card(null, ['slider_mode' => true]); ?>
+                <?php endwhile; ?>
+            </div>
+        </div>
+
+        <!-- Desktop: Grid -->
+        <div class="featured-paintings featured-paintings-desktop">
+            <?php
+            $featured_paintings->rewind_posts();
+            while ($featured_paintings->have_posts()) : $featured_paintings->the_post();
+                render_painting_card();
+            endwhile;
+            ?>
+        </div>
     </div>
     <?php
     wp_reset_postdata();

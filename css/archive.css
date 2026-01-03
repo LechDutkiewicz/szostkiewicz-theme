@@ -15,7 +15,7 @@
     --column-gap: 0px;
 }
 
-/* GRID OBRAZÓW */
+/* GRID OBRAZÓW - Base styles */
 
 .painting-item + .painting-item {
     margin-top: 3em;
@@ -34,20 +34,21 @@
     color: var(--e-global-color-primary);
 }
 
+/* Archive specific desktop grid */
 @media screen and (min-width: 768px) {
-    .featured-paintings {
+    .archive-paintings {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 6em;
         margin: 2em 0;
     }
 
-    .painting-item {
+    .archive-paintings .painting-item {
         grid-template-rows: 330px repeat(3, auto);
         height: 100%;
     }
 
-    .painting-item + .painting-item {
+    .archive-paintings .painting-item + .painting-item {
         margin-top: 0;
     }
 }
