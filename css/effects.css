@@ -1,0 +1,47 @@
+/* cienie */
+
+.shadow-black {
+	box-shadow: 5px 10px 12.6px 0px rgba(161, 161, 161, 0.34), 2.1px 4.1px 5.2px 0px rgba(161, 161, 161, 0.34), 0.8px 1.6px 2px 0px rgba(161, 161, 161, 0.34), 0.3px 0.5px 0.7px 0px rgba(161, 161, 161, 0.34);
+
+}
+
+.shadow-gray-low {
+	box-shadow: 1px 2px 2.5px -2.5px rgba(156, 156, 156, 0.34), 0.4px 0.8px 1px -1.2px rgba(156, 156, 156, 0.34), 0.3px 0.5px 0.7px 0px rgba(156, 156, 156, 0.34);
+}
+
+@media screen and (max-width: 767px) {
+	.mobile-shadow-none {
+		box-shadow: none;
+	}
+}
+
+/* listy */
+
+.list-lined ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+}
+
+.list-lined li,
+.image-box-lined .elementor-image-box-description {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+    flex: 1 1 0;
+}
+
+.list-lined li:before,
+.image-box-lined .elementor-image-box-description:before {
+    content: "";
+    width: 4em;
+    border-top: 1px solid var(--e-global-color-accent);
+    align-self: start;
+}
+
+@media screen and (min-width: 768px) {
+	.list-lined:not(.list-lined--vertical) ul {
+		flex-direction: row;		
+    	gap: 4em;
+	}
+}

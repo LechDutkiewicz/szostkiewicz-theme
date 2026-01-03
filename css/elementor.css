@@ -1,0 +1,18 @@
+/* widget nagłówek */
+
+.elementor-heading-title,
+.elementor-icon-box-title {
+	margin-bottom: .4em;
+	letter-spacing: -.035em;
+	line-height: 1.05!important;
+}
+
+/* widget pole ikonki */
+
+.icon-box--plan .elementor-icon {
+	margin-top: .4em;
+}
+
+.icon-box--plan .elementor-icon-box-title {
+	margin-top: 0;
+}

@@ -1,0 +1,433 @@
+/**
+ * Single Obraz Styles
+ * 
+ * @package Hello_Theme_Child
+ */
+
+/* ==========================================================================
+   CSS Custom Properties
+   ========================================================================== */
+
+:root {
+    --obraz-color-primary: #1a1a1a;
+    --obraz-color-secondary: #666666;
+    --obraz-color-accent: #D4A93C;
+    --obraz-color-bg: #ffffff;
+    --obraz-color-bg-alt: #f8f5f0;
+    --obraz-color-border: #1a1a1a;
+    
+    --obraz-font-serif: 'Playfair Display', Georgia, serif;
+    --obraz-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    
+    --obraz-container-width: 1200px;
+    --obraz-spacing-unit: 1rem;
+}
+
+/* ==========================================================================
+   Base / Reset for template
+   ========================================================================== */
+
+.obraz-single {
+    font-family: var(--obraz-font-sans);
+    color: var(--obraz-color-primary);
+    line-height: 1.6;
+}
+
+.obraz-single img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ==========================================================================
+   SEKCJA 1: Hero z obrazem
+   ========================================================================== */
+
+.obraz-hero {
+    padding: calc(var(--obraz-spacing-unit) * 4) var(--obraz-spacing-unit);
+    background: var(--obraz-color-bg);
+}
+
+.obraz-hero__container {
+    max-width: var(--obraz-container-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: calc(var(--obraz-spacing-unit) * 4);
+    align-items: start;
+}
+
+/* Gallery */
+.obraz-hero__gallery {
+    position: relative;
+}
+
+.obraz-hero__single-image,
+.obraz-swiper {
+    background: linear-gradient(135deg, #f5e6e0 0%, #e8d5cf 100%);
+    padding: calc(var(--obraz-spacing-unit) * 2);
+    box-shadow: 
+        20px 20px 60px rgba(0, 0, 0, 0.05),
+        -5px -5px 20px rgba(255, 255, 255, 0.8);
+}
+
+.obraz-hero__single-image img,
+.obraz-swiper img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-height: 600px;
+}
+
+.obraz-hero__no-image {
+    aspect-ratio: 3/4;
+    background: var(--obraz-color-bg-alt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--obraz-color-secondary);
+}
+
+/* Swiper customization */
+.obraz-swiper .swiper-button-prev,
+.obraz-swiper .swiper-button-next {
+    color: var(--obraz-color-primary);
+    background: rgba(255, 255, 255, 0.9);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.obraz-swiper .swiper-button-prev::after,
+.obraz-swiper .swiper-button-next::after {
+    font-size: 16px;
+}
+
+.obraz-swiper .swiper-pagination-bullet-active {
+    background: var(--obraz-color-primary);
+}
+
+/* Info section */
+.obraz-hero__info {
+    padding-top: calc(var(--obraz-spacing-unit) * 2);
+}
+
+.obraz-hero__kolekcja {
+    display: inline-block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--obraz-color-secondary);
+    margin-bottom: var(--obraz-spacing-unit);
+}
+
+.obraz-hero__title {
+    font-family: var(--obraz-font-serif);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 0 0 calc(var(--obraz-spacing-unit) * 1.5) 0;
+}
+
+.obraz-hero__opis {
+    font-size: 0.95rem;
+    color: var(--obraz-color-secondary);
+    margin-bottom: calc(var(--obraz-spacing-unit) * 2);
+}
+
+.obraz-hero__opis p {
+    margin: 0 0 var(--obraz-spacing-unit) 0;
+}
+
+.obraz-hero__opis p:last-child {
+    margin-bottom: 0;
+}
+
+/* Meta (rozmiar, cena) */
+.obraz-hero__meta {
+    margin: 0 0 calc(var(--obraz-spacing-unit) * 2) 0;
+}
+
+.obraz-hero__meta-item {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.obraz-hero__meta-item dt {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+}
+
+.obraz-hero__meta-item dd {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.obraz-hero__meta-item--cena dd {
+    color: var(--obraz-color-accent);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* CTA Button */
+.obraz-hero__cta {
+    display: inline-block;
+    padding: calc(var(--obraz-spacing-unit) * 0.875) calc(var(--obraz-spacing-unit) * 2);
+    border: 1px solid var(--obraz-color-border);
+    background: transparent;
+    color: var(--obraz-color-primary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.obraz-hero__cta:hover {
+    background: var(--obraz-color-primary);
+    color: var(--obraz-color-bg);
+}
+
+/* ==========================================================================
+   SEKCJA 2: Opinie
+   ========================================================================== */
+
+.opinie-section {
+    position: relative;
+    padding: calc(var(--obraz-spacing-unit) * 5) var(--obraz-spacing-unit);
+    overflow: hidden;
+}
+
+.opinie-section__background {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, 
+        rgba(248, 245, 240, 0) 0%,
+        rgba(240, 220, 210, 0.3) 30%,
+        rgba(230, 200, 190, 0.4) 50%,
+        rgba(240, 220, 210, 0.3) 70%,
+        rgba(248, 245, 240, 0) 100%
+    );
+    z-index: -1;
+}
+
+.opinie-section__container {
+    max-width: var(--obraz-container-width);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.opinie-section__title {
+    font-family: var(--obraz-font-serif);
+    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+    font-weight: 400;
+    margin: 0 0 calc(var(--obraz-spacing-unit) * 3) 0;
+}
+
+/* Opinie Swiper */
+.opinie-swiper {
+    padding-bottom: calc(var(--obraz-spacing-unit) * 2);
+}
+
+.opinie-swiper .swiper-slide {
+    height: auto;
+}
+
+/* Opinia card */
+.opinia-card {
+    background: transparent;
+    padding: calc(var(--obraz-spacing-unit) * 2);
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.opinia-card__quote {
+    margin: 0 0 calc(var(--obraz-spacing-unit) * 1.5) 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--obraz-color-primary);
+    position: relative;
+}
+
+.opinia-card__quote::before {
+    content: '„';
+    font-family: var(--obraz-font-serif);
+    font-size: 2rem;
+    position: absolute;
+    left: -0.5rem;
+    top: -0.5rem;
+    color: var(--obraz-color-secondary);
+    opacity: 0.5;
+}
+
+.opinia-card__quote p {
+    margin: 0;
+}
+
+.opinia-card__author {
+    display: flex;
+    align-items: center;
+    gap: var(--obraz-spacing-unit);
+}
+
+.opinia-card__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.opinia-card__author-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.opinia-card__name {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.opinia-card__role {
+    font-size: 0.8rem;
+    color: var(--obraz-color-secondary);
+}
+
+/* Opinie navigation */
+.opinie-navigation {
+    display: flex;
+    justify-content: center;
+    gap: var(--obraz-spacing-unit);
+    margin-top: calc(var(--obraz-spacing-unit) * 2);
+}
+
+.opinie-prev,
+.opinie-next {
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--obraz-color-border);
+    background: var(--obraz-color-bg);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.opinie-prev:hover,
+.opinie-next:hover {
+    background: var(--obraz-color-primary);
+    color: var(--obraz-color-bg);
+}
+
+/* ==========================================================================
+   SEKCJA 3: Instagram
+   ========================================================================== */
+
+.instagram-section {
+    padding: calc(var(--obraz-spacing-unit) * 5) var(--obraz-spacing-unit);
+    background: var(--obraz-color-bg);
+}
+
+.instagram-section__container {
+    max-width: var(--obraz-container-width);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.instagram-section__title {
+    font-family: var(--obraz-font-serif);
+    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+    font-weight: 400;
+    margin: 0 0 calc(var(--obraz-spacing-unit) * 3) 0;
+}
+
+.instagram-section__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: calc(var(--obraz-spacing-unit) * 1.5);
+    margin-bottom: calc(var(--obraz-spacing-unit) * 2);
+}
+
+.instagram-section__item {
+    aspect-ratio: 1;
+    overflow: hidden;
+    display: block;
+}
+
+.instagram-section__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.instagram-section__item:hover img {
+    transform: scale(1.05);
+}
+
+.instagram-section__link {
+    display: inline-block;
+    color: var(--obraz-color-primary);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: opacity 0.3s ease;
+}
+
+.instagram-section__link:hover {
+    opacity: 0.7;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+    .obraz-hero__container {
+        gap: calc(var(--obraz-spacing-unit) * 3);
+    }
+}
+
+@media (max-width: 768px) {
+    .obraz-hero__container {
+        grid-template-columns: 1fr;
+        gap: calc(var(--obraz-spacing-unit) * 2);
+    }
+    
+    .obraz-hero__single-image img,
+    .obraz-swiper img {
+        max-height: 400px;
+    }
+    
+    .instagram-section__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .opinia-card {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .obraz-hero {
+        padding: calc(var(--obraz-spacing-unit) * 2) var(--obraz-spacing-unit);
+    }
+    
+    .obraz-hero__meta-item {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .obraz-hero__cta {
+        display: block;
+        text-align: center;
+    }
+}

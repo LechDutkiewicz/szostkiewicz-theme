@@ -1,0 +1,215 @@
+/* 
+Theme Name: Hello Elementor Child
+Theme URI: https://github.com/elementor/hello-theme-child/
+Description: Hello Elementor Child is a child theme of Hello Elementor, created by Elementor team
+Author: Elementor Team
+Author URI: https://elementor.com/
+Template: hello-elementor
+Version: 2.0.0
+Text Domain: hello-elementor-child
+License: GNU General Public License v3 or later.
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
+Tags: flexible-header, custom-colors, custom-menu, custom-logo, editor-style, featured-images, rtl-language-support, threaded-comments, translation-ready
+*/
+
+/* Add your custom styles here */
+
+html {
+    /* 16px na 320px → 18px na 1200px → 20px na 2560px */
+    font-size: clamp(1rem, 0.857rem + 0.357vw, 1.25rem);
+}
+
+strong {
+	font-weight: bold;
+}
+
+
+/*************************
+ * NAWIGACJA
+ * **********************/
+
+.site-header {
+	padding-block-start: .75rem;
+	padding-block-end: .75rem;
+}
+
+.site-header .site-title {
+	font-size: 1rem;
+}
+
+.site-navigation ul.menu {
+	column-gap: 2rem;
+}
+
+.site-navigation ul.menu li a {
+	padding: 0;
+}
+
+
+/*************************
+ * STOPKA
+ * **********************/
+
+.site-footer {
+    padding: 6rem 0 1.5rem;
+}
+
+.site-footer .footer-inner {
+    row-gap: 6rem;
+}
+
+.site-footer .site-navigation {
+    flex: 1 1 33%;
+    order: 1;
+}
+
+.site-footer .site-branding {
+    order: 2;
+    flex: 0 0 33%;
+}
+
+.site-footer .footer-inner .copyright {
+    order: 3;
+    flex: 1 1 100%;
+    justify-content: center;
+}
+
+
+/*************************
+ * SEKCJE
+ * **********************/
+
+.section--bar > .e-con-inner {
+	padding-top: 2.5em;
+	padding-bottom: 2.5em;
+}
+
+.section--whitespace > .e-con-inner {
+	padding-top: 3em;
+	padding-bottom: 4em;
+}
+
+@media screen and (min-width: 1024px) {
+		
+	.section--whitespace > .e-con-inner {
+		padding-top: 6.5em;
+		padding-bottom: 9.75em;
+	}
+}
+
+/*************************
+ * GRID OBRAZÓW
+ * **********************/
+
+.painting-item + .painting-item {
+	margin-top: 3em;
+}
+
+.painting-item {
+    display: grid;
+    grid-template-areas:
+        "image image"
+        "title price"
+        "dimensions dimensions"
+        "description description";	
+    grid-template-rows: repeat(4, auto);
+    grid-template-columns: 3fr 1fr;
+    overflow: hidden;
+	color: var(--e-global-color-primary);
+}
+
+@media screen and (min-width: 768px) {
+		
+	.featured-paintings {
+	    display: grid;
+	    grid-template-columns: repeat(3, 1fr);
+	    gap: 6em;
+	    margin: 2em 0;
+	}
+	
+	.painting-item {
+		grid-template-rows: 330px repeat(3, auto);
+    	height: 100%; /* Ważne dla równej wysokości */
+	}
+	
+	.painting-item + .painting-item {
+		margin-top: 0;
+	}
+}
+
+.painting-item img {
+    grid-area: image;
+    align-self: center;
+    justify-self: center;
+    margin-bottom: 1.2rem;
+}
+
+.painting-item h3 {
+    grid-area: title;
+    margin: 0;
+    align-self: flex-end;
+}
+
+.painting-item .dimensions {
+    grid-area: dimensions;
+    font-size: var(--text-small-font-size);
+    margin-top: .25em;
+}
+
+.painting-item .description {
+    grid-area: description;
+    margin: .75em 0 0;
+    font-size: var(--text-small-font-size);
+    align-self: start; /* Tekst przykleja się do góry */
+}
+
+.painting-item .price {
+    grid-area: price;
+    font-size: var(--h6-font-size);
+    font-family: var(--e-global-typography-accent-font-family);
+    color: var(--e-global-color-accent);
+    text-align: right;
+}
+
+@media screen and (min-width: 768px) {
+	.painting-item .dimensions {
+    	font-size: var(--text-small-font-size-desktop);
+	}
+
+	.painting-item .description {
+	    font-size: var(--text-small-font-size-desktop);
+	}
+
+	.painting-item .price {
+	    font-size: var(--h6-font-size-desktop);
+	}
+}
+
+
+/*************************
+ * ARCHIWUM OBRAZÓW
+ * **********************/
+
+ .archive .type-obraz .elementor-element {
+ 	--display: flex;
+    --flex-direction: column;
+    --container-widget-width: calc((1 - var(--container-widget-flex-grow)) * 100%);
+    --container-widget-height: initial;
+    --container-widget-flex-grow: 0;
+    --container-widget-align-self: initial;
+    --flex-wrap-mobile: wrap;
+    --justify-content: center;
+    --align-items: center;
+    --gap: 60px 0px;
+    --row-gap: 60px;
+    --column-gap: 0px;
+ }
+
+
+/*************************
+ * 3-STEP PLAN
+ * **********************/
+
+.elementor-widget-icon-box.elementor-position-left h4 {
+	margin-top: 0
+}

@@ -1,0 +1,23 @@
+/* mozaika */
+.mozaika {
+	background: white;
+}
+
+.mozaika figure {
+	margin-right: 0;
+	font-size: 0;
+}
+
+.mozaika:not(.mozaika--noimg) .elementor-image-box-content {
+	padding: 0;
+}
+
+@media screen and (min-width: 768px) {
+	.mozaika figure {
+		max-width: 50%;
+		flex: 0 0 50%;
+	}
+	.mozaika:not(.mozaika--noimg) .elementor-image-box-content {
+		padding: 0 2.5em;
+	}
+}
