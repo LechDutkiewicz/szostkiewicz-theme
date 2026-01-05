@@ -1,37 +1,55 @@
 /**
- * Featured Paintings Mobile Slider
+ * Featured Paintings Slider
  *
- * Initializes Swiper carousel for mobile with peek effect
+ * Responsive Swiper carousel with peek effect
+ * Mobile: 1 slide + peek
+ * Desktop: 3 slides + peek with navigation arrows
  */
 
 document.addEventListener('DOMContentLoaded', function() {
     'use strict';
 
     const featuredSwiper = document.querySelector('.featured-paintings-swiper');
-    if (featuredSwiper && window.innerWidth < 768) {
-        new Swiper('.featured-paintings-swiper', {
-            slidesPerView: 1.2,
-            spaceBetween: 20,
-            centeredSlides: false,
+    if (!featuredSwiper) return;
 
-            // Keyboard control
-            keyboard: {
-                enabled: true,
-            },
+    const swiper = new Swiper('.featured-paintings-swiper', {
+        slidesPerView: 1.2,
+        spaceBetween: 36,
+        centeredSlides: false,
+        slidesPerGroup: 1,
 
-            // Touch gestures
-            touchRatio: 1,
+        // Responsive breakpoints
+        breakpoints: {
+            768: {
+                slidesPerView: 3.2,
+                spaceBetween: 36,
+                slidesPerGroup: 1,
+            }
+        },
 
-            // Resistance when swiping
-            resistance: true,
-            resistanceRatio: 0.85,
+        // Navigation arrows
+        navigation: {
+            nextEl: '.featured-paintings-next',
+            prevEl: '.featured-paintings-prev',
+        },
 
-            // Slide effect
-            effect: 'slide',
+        // Keyboard control
+        keyboard: {
+            enabled: true,
+        },
 
-            // Watch for resize
-            observer: true,
-            observeParents: true,
-        });
-    }
+        // Touch gestures
+        touchRatio: 1,
+
+        // Resistance when swiping
+        resistance: true,
+        resistanceRatio: 0.85,
+
+        // Slide effect
+        effect: 'slide',
+
+        // Watch for resize
+        observer: true,
+        observeParents: true,
+    });
 });
