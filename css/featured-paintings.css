@@ -81,10 +81,11 @@
     .featured-paintings-next {
         width: 48px;
         height: 48px;
-        border-radius: 50%;
+        border-radius: 50% !important;
         background: var(--e-global-color-primary);
         color: white;
-        border: none;
+        border: none !important;
+        padding: 0 !important;
         cursor: pointer;
         display: flex;
         align-items: center;

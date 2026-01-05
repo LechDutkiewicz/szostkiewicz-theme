@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
         breakpoints: {
             768: {
                 slidesPerView: 3.2,
-                spaceBetween: 36,
+                spaceBetween: 64,
                 slidesPerGroup: 1,
             }
         },
