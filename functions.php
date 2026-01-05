@@ -84,11 +84,38 @@ function child_assets() {
         );
     }
 
-    // Enqueue JavaScript files
+    // Enqueue Swiper (for sliders)
+    wp_enqueue_style(
+        'swiper',
+        'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css',
+        [],
+        '11.0.0'
+    );
+
+    wp_enqueue_script(
+        'swiper',
+        'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
+        [],
+        '11.0.0',
+        true
+    );
+
+    // Enqueue single-obraz.js (for single painting pages)
+    if (is_singular('obraz')) {
+        wp_enqueue_script(
+            'child-theme-single-obraz',
+            get_stylesheet_directory_uri() . '/js/single-obraz.js',
+            ['swiper'],
+            HELLO_ELEMENTOR_CHILD_VERSION,
+            true
+        );
+    }
+
+    // Enqueue featured-paintings.js (for homepage/shortcode)
     wp_enqueue_script(
         'child-theme-featured-paintings',
         get_stylesheet_directory_uri() . '/js/featured-paintings.js',
-        [],
+        ['swiper'],
         HELLO_ELEMENTOR_CHILD_VERSION,
         true
     );
