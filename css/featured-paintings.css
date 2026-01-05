@@ -14,21 +14,11 @@
     /* No padding - full width */
 }
 
-/* Swiper Slide - Peek Effect */
+/* Swiper Slide - Peek Effect (opacity managed by JS) */
 .featured-paintings-swiper .swiper-slide {
-    opacity: 0.3;
-    transition: opacity 0.4s ease;
-    width: auto;
-}
-
-/* All visible slides - full opacity */
-.featured-paintings-swiper .swiper-slide-visible {
-    opacity: 1;
-}
-
-/* Peek slides (partially visible) - lower opacity */
-.featured-paintings-swiper .swiper-slide:not(.swiper-slide-visible) {
     opacity: 0.5;
+    transition: opacity 0.3s ease;
+    width: auto;
 }
 
 /* Painting item in slider - Mobile */
