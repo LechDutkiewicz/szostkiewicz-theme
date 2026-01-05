@@ -157,8 +157,8 @@ function featured_paintings_shortcode($atts) {
     ob_start();
     ?>
     <div class="featured-paintings-wrapper">
-        <!-- Mobile: Swiper Slider -->
-        <div class="swiper featured-paintings-swiper featured-paintings-mobile">
+        <!-- Swiper Slider (Mobile & Desktop) -->
+        <div class="swiper featured-paintings-swiper">
             <div class="swiper-wrapper">
                 <?php while ($featured_paintings->have_posts()) : $featured_paintings->the_post(); ?>
                     <?php render_painting_card(null, ['slider_mode' => true]); ?>
@@ -166,14 +166,18 @@ function featured_paintings_shortcode($atts) {
             </div>
         </div>
 
-        <!-- Desktop: Grid -->
-        <div class="featured-paintings featured-paintings-desktop">
-            <?php
-            $featured_paintings->rewind_posts();
-            while ($featured_paintings->have_posts()) : $featured_paintings->the_post();
-                render_painting_card();
-            endwhile;
-            ?>
+        <!-- Navigation Arrows (Desktop only) -->
+        <div class="featured-paintings-nav">
+            <button class="featured-paintings-prev" aria-label="Poprzedni obraz">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+            <button class="featured-paintings-next" aria-label="Następny obraz">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
         </div>
     </div>
     <?php

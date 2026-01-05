@@ -1,16 +1,7 @@
-/* FEATURED PAINTINGS SLIDER & GRID */
+/* FEATURED PAINTINGS SLIDER */
 
 .featured-paintings-wrapper {
     position: relative;
-}
-
-/* Mobile Slider */
-.featured-paintings-mobile {
-    display: block;
-}
-
-.featured-paintings-desktop {
-    display: none;
 }
 
 /* Swiper Container */
@@ -34,6 +25,12 @@
     opacity: 1;
 }
 
+/* Multiple active slides on desktop */
+.featured-paintings-swiper .swiper-slide-active + .swiper-slide-active,
+.featured-paintings-swiper .swiper-slide-active + .swiper-slide-active + .swiper-slide-active {
+    opacity: 1;
+}
+
 /* Next slide peek - visible with lower opacity */
 .featured-paintings-swiper .swiper-slide-next {
     opacity: 0.5;
@@ -44,35 +41,77 @@
     opacity: 0.2;
 }
 
-/* Painting item in slider */
+/* Painting item in slider - Mobile */
 .featured-paintings-swiper .painting-item {
     margin-top: 0;
+    grid-template-rows: 330px repeat(3, auto);
+    grid-template-columns: 5fr 2fr;
 }
 
 .featured-paintings-swiper .painting-item + .painting-item {
     margin-top: 0;
 }
 
-/* Desktop Grid (768px+) */
+/* Desktop Styles (768px+) */
 @media screen and (min-width: 768px) {
-    .featured-paintings-mobile {
-        display: none;
+    .featured-paintings-swiper {
+        padding: 0 0 3em 0;
     }
 
-    .featured-paintings-desktop {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 6em;
-        margin: 2em 0;
+    .featured-paintings-swiper .swiper-wrapper {
+        padding-left: 2em;
     }
 
-    .featured-paintings-desktop .painting-item {
+    .featured-paintings-swiper .painting-item {
         grid-template-rows: 330px repeat(3, auto);
         height: 100%;
     }
+}
 
-    .featured-paintings-desktop .painting-item + .painting-item {
-        margin-top: 0;
+/* Navigation Arrows - Desktop only */
+.featured-paintings-nav {
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    .featured-paintings-nav {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+    }
+
+    .featured-paintings-prev,
+    .featured-paintings-next {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--e-global-color-primary);
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .featured-paintings-prev:hover,
+    .featured-paintings-next:hover {
+        background: var(--e-global-color-accent);
+        transform: scale(1.1);
+    }
+
+    .featured-paintings-prev:disabled,
+    .featured-paintings-next:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
+    .featured-paintings-prev svg,
+    .featured-paintings-next svg {
+        width: 24px;
+        height: 24px;
     }
 }
 
