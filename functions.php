@@ -128,7 +128,7 @@ function featured_paintings_shortcode($atts) {
 
     $args = [
         'post_type' => 'obraz',
-        'posts_per_page' => absint($atts['count']),
+        'posts_per_page' => intval($atts['count']),
         'meta_query' => [
             [
                 'key' => 'wyroznione_na_glownej',
