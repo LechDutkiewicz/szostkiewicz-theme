@@ -42,6 +42,9 @@ define('CUSTOM_FIELDS_PATH', CHILD_THEME_PATH . 'lib/custom_fields/');
 // Load template functions
 require_once CHILD_THEME_PATH . 'inc/template-functions.php';
 
+// Load custom post types
+require_once CHILD_THEME_PATH . 'inc/custom-post-types.php';
+
 /**
  * Deregister jQuery (not used in theme)
  */
