@@ -25,22 +25,22 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
             <!-- Lewa strona: Galeria -->
             <div class="obraz-hero__gallery">
                 <?php if ($galeria && count($galeria) > 0): ?>
-                    
+
                     <?php if (count($galeria) === 1): ?>
-                        <!-- Pojedynczy obraz -->
+                        <!-- Pojedynczy obraz z galerii ACF -->
                         <div class="obraz-hero__single-image">
-                            <img src="<?php echo esc_url($galeria[0]['url']); ?>" 
+                            <img src="<?php echo esc_url($galeria[0]['url']); ?>"
                                  alt="<?php echo esc_attr($galeria[0]['alt'] ?: get_the_title()); ?>"
                                  loading="eager">
                         </div>
-                    
+
                     <?php else: ?>
-                        <!-- Swiper galeria -->
+                        <!-- Swiper galeria (wiele obrazów) -->
                         <div class="swiper obraz-swiper">
                             <div class="swiper-wrapper">
                                 <?php foreach ($galeria as $image): ?>
                                     <div class="swiper-slide">
-                                        <img src="<?php echo esc_url($image['url']); ?>" 
+                                        <img src="<?php echo esc_url($image['url']); ?>"
                                              alt="<?php echo esc_attr($image['alt'] ?: get_the_title()); ?>"
                                              loading="lazy">
                                     </div>
@@ -51,9 +51,18 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
                             <div class="swiper-button-next"></div>
                         </div>
                     <?php endif; ?>
-                    
+
+                <?php elseif (has_post_thumbnail()): ?>
+                    <!-- Fallback do Featured Image -->
+                    <div class="obraz-hero__single-image">
+                        <?php the_post_thumbnail('large', [
+                            'loading' => 'eager',
+                            'alt' => get_the_title()
+                        ]); ?>
+                    </div>
+
                 <?php else: ?>
-                    <!-- Fallback jeśli brak obrazów -->
+                    <!-- Brak zdjęć (ani galeria, ani featured image) -->
                     <div class="obraz-hero__no-image">
                         <span>Brak zdjęcia</span>
                     </div>
