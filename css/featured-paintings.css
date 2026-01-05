@@ -6,12 +6,12 @@
 
 /* Swiper Container */
 .featured-paintings-swiper {
-    overflow: visible;
+    overflow: visible !important;
     padding: 0 0 2em 0;
 }
 
 .featured-paintings-swiper .swiper-wrapper {
-    padding-left: 1em;
+    /* No padding - full width */
 }
 
 /* Swiper Slide - Peek Effect */
@@ -56,10 +56,6 @@
 @media screen and (min-width: 768px) {
     .featured-paintings-swiper {
         padding: 0 0 3em 0;
-    }
-
-    .featured-paintings-swiper .swiper-wrapper {
-        padding-left: 2em;
     }
 
     .featured-paintings-swiper .painting-item {

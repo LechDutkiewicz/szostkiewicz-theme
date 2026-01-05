@@ -51,5 +51,17 @@ document.addEventListener('DOMContentLoaded', function() {
         // Watch for resize
         observer: true,
         observeParents: true,
+
+        // Events
+        on: {
+            init: function() {
+                // Force overflow visible after init
+                this.el.style.overflow = 'visible';
+            },
+            resize: function() {
+                // Keep overflow visible on resize
+                this.el.style.overflow = 'visible';
+            }
+        }
     });
 });

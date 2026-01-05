@@ -46,16 +46,6 @@ require_once CHILD_THEME_PATH . 'inc/template-functions.php';
 require_once CHILD_THEME_PATH . 'inc/custom-post-types.php';
 
 /**
- * Deregister jQuery (not used in theme)
- */
-function deregister_jquery() {
-    if (!is_admin()) {
-        wp_deregister_script('jquery');
-    }
-}
-add_action('wp_enqueue_scripts', 'deregister_jquery', 1);
-
-/**
  * Enqueue child theme assets
  */
 function child_assets() {
