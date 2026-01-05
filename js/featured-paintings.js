@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
         centeredSlides: false,
         slidesPerGroup: 1,
 
+        // Enable visibility detection for opacity effects
+        watchSlidesVisibility: true,
+
         // Responsive breakpoints
         breakpoints: {
             768: {

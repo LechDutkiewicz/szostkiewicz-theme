@@ -21,24 +21,14 @@
     width: auto;
 }
 
-.featured-paintings-swiper .swiper-slide-active {
+/* All visible slides - full opacity */
+.featured-paintings-swiper .swiper-slide-visible {
     opacity: 1;
 }
 
-/* Multiple active slides on desktop */
-.featured-paintings-swiper .swiper-slide-active + .swiper-slide-active,
-.featured-paintings-swiper .swiper-slide-active + .swiper-slide-active + .swiper-slide-active {
-    opacity: 1;
-}
-
-/* Next slide peek - visible with lower opacity */
-.featured-paintings-swiper .swiper-slide-next {
+/* Peek slides (partially visible) - lower opacity */
+.featured-paintings-swiper .swiper-slide:not(.swiper-slide-visible) {
     opacity: 0.5;
-}
-
-/* Previous slide - barely visible */
-.featured-paintings-swiper .swiper-slide-prev {
-    opacity: 0.2;
 }
 
 /* Painting item in slider - Mobile */
