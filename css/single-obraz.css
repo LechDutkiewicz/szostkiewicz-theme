@@ -15,17 +15,23 @@
     --obraz-color-bg: #ffffff;
     --obraz-color-bg-alt: #f8f5f0;
     --obraz-color-border: #1a1a1a;
-    
+
     --obraz-font-serif: 'Playfair Display', Georgia, serif;
     --obraz-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    
+
     --obraz-container-width: 1200px;
-    --obraz-spacing-unit: 1rem;
+    --obraz-spacing-unit: 1em;
 }
 
 /* ==========================================================================
    Base / Reset for template
    ========================================================================== */
+
+/* Reset Hello theme paddings */
+.obraz-single.site-main {
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+}
 
 .obraz-single {
     font-family: var(--obraz-font-sans);
@@ -121,11 +127,7 @@
     margin-bottom: var(--obraz-spacing-unit);
 }
 
-.obraz-hero__title {
-    font-family: var(--obraz-font-serif);
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 400;
-    line-height: 1.2;
+.obraz-hero__info h1 {
     margin: 0 0 calc(var(--obraz-spacing-unit) * 1.5) 0;
 }
 
@@ -150,6 +152,7 @@
 
 .obraz-hero__meta-item {
     display: flex;
+    align-items: baseline;
     gap: 0.5rem;
     margin-bottom: 0.5rem;
 }
@@ -440,26 +443,27 @@
     max-width: var(--obraz-container-width);
     margin: 0 auto;
     padding: calc(var(--obraz-spacing-unit) * 1.5) var(--obraz-spacing-unit);
-    font-size: 0.85rem;
-    color: var(--obraz-color-secondary);
+    font-size: var(--text-small-font-size);
+    color: #999;
 }
 
 .breadcrumbs a {
-    color: var(--obraz-color-secondary);
+    color: #999;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .breadcrumbs a:hover {
-    color: var(--obraz-color-primary);
+    color: #666;
 }
 
 .breadcrumbs__separator {
-    margin: 0 0.5rem;
+    margin: 0 0.5em;
+    color: #ccc;
 }
 
 .breadcrumbs__current {
-    color: var(--obraz-color-primary);
+    color: #666;
 }
 
 /* ==========================================================================
@@ -472,10 +476,7 @@
     border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.obraz-hero__contact-title {
-    font-family: var(--obraz-font-serif);
-    font-size: 1.25rem;
-    font-weight: 400;
+.obraz-hero__contact h2 {
     margin: 0 0 calc(var(--obraz-spacing-unit) * 1.5) 0;
 }
 
@@ -488,36 +489,40 @@
 .contact-link {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
-    padding: calc(var(--obraz-spacing-unit) * 0.75) calc(var(--obraz-spacing-unit) * 1.5);
-    border: 1px solid var(--obraz-color-border);
-    background: transparent;
-    color: var(--obraz-color-primary);
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: 50%;
+    border: none;
+    background: var(--e-global-color-primary);
+    color: white;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0;
     font-weight: 500;
     transition: all 0.3s ease;
+    box-shadow: var(--shadow-elevation-low);
 }
 
 .contact-link:hover {
-    background: var(--obraz-color-primary);
-    color: var(--obraz-color-bg);
+    background: var(--e-global-color-accent);
+    color: white;
+    box-shadow: var(--shadow-elevation-medium);
 }
 
 .contact-link svg {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     flex-shrink: 0;
 }
 
 .contact-link--messenger:hover {
     background: #0084FF;
-    border-color: #0084FF;
 }
 
 .contact-link--whatsapp:hover {
     background: #25D366;
-    border-color: #25D366;
 }
 
 /* ==========================================================================
