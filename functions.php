@@ -96,19 +96,27 @@ function child_assets() {
         true
     );
 
-    // Enqueue GLightbox (for lightbox/zoom)
+    // Enqueue Photoswipe (for lightbox/zoom with controls)
     wp_enqueue_style(
-        'glightbox',
-        'https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css',
+        'photoswipe',
+        'https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe.css',
         [],
-        '3.2.0'
+        '5.4.3'
     );
 
     wp_enqueue_script(
-        'glightbox',
-        'https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js',
+        'photoswipe',
+        'https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe.umd.min.js',
         [],
-        '3.2.0',
+        '5.4.3',
+        true
+    );
+
+    wp_enqueue_script(
+        'photoswipe-lightbox',
+        'https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe-lightbox.umd.min.js',
+        ['photoswipe'],
+        '5.4.3',
         true
     );
 
@@ -117,7 +125,7 @@ function child_assets() {
         wp_enqueue_script(
             'child-theme-single-obraz',
             get_stylesheet_directory_uri() . '/js/single-obraz.js',
-            ['swiper', 'glightbox'],
+            ['swiper', 'photoswipe', 'photoswipe-lightbox'],
             HELLO_ELEMENTOR_CHILD_VERSION,
             true
         );
