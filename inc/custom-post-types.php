@@ -122,9 +122,9 @@ function modify_obraz_archive_query($query) {
 add_action('pre_get_posts', 'modify_obraz_archive_query');
 
 /**
- * Add thumbnail column to Obraz admin list
+ * Add custom columns to Obraz admin list
  */
-function add_obraz_thumbnail_column($columns) {
+function add_obraz_custom_columns($columns) {
     $new_columns = [];
 
     foreach ($columns as $key => $value) {
@@ -132,22 +132,48 @@ function add_obraz_thumbnail_column($columns) {
             $new_columns['thumbnail'] = 'Miniatura';
         }
         $new_columns[$key] = $value;
+
+        // Add custom columns after title
+        if ($key === 'title') {
+            $new_columns['year'] = 'Rok';
+            $new_columns['price'] = 'Cena';
+        }
     }
 
     return $new_columns;
 }
-add_filter('manage_obraz_posts_columns', 'add_obraz_thumbnail_column');
+add_filter('manage_obraz_posts_columns', 'add_obraz_custom_columns');
 
 /**
- * Display thumbnail in admin column
+ * Display custom columns in admin
  */
-function display_obraz_thumbnail_column($column, $post_id) {
+function display_obraz_custom_columns($column, $post_id) {
     if ($column === 'thumbnail') {
         $thumbnail = get_the_post_thumbnail($post_id, [60, 60]);
         echo $thumbnail ?: '<span style="color: #999;">—</span>';
     }
+
+    if ($column === 'year') {
+        $metadata = get_painting_metadata($post_id);
+        echo $metadata['year'] ?: '<span style="color: #999;">—</span>';
+    }
+
+    if ($column === 'price') {
+        $metadata = get_painting_metadata($post_id);
+        $price = $metadata['price'];
+
+        if ($price) {
+            echo '<span class="obraz-price-display" data-post-id="' . $post_id . '" data-price="' . esc_attr($price) . '">';
+            echo esc_html($price) . ' zł';
+            echo '</span>';
+            echo ' <button type="button" class="button button-small obraz-edit-price" data-post-id="' . $post_id . '" style="margin-left: 5px;">Edytuj</button>';
+        } else {
+            echo '<span class="obraz-price-display" data-post-id="' . $post_id . '" data-price="" style="color: #999;">sprzedany</span>';
+            echo ' <button type="button" class="button button-small obraz-edit-price" data-post-id="' . $post_id . '" style="margin-left: 5px;">Ustaw cenę</button>';
+        }
+    }
 }
-add_action('manage_obraz_posts_custom_column', 'display_obraz_thumbnail_column', 10, 2);
+add_action('manage_obraz_posts_custom_column', 'display_obraz_custom_columns', 10, 2);
 
 /**
  * Make thumbnail column sortable
@@ -188,13 +214,23 @@ function display_obraz_order_column($column, $post_id) {
 add_action('manage_obraz_posts_custom_column', 'display_obraz_order_column', 5, 2);
 
 /**
- * Make order column narrow
+ * Column width and styling
  */
 function obraz_admin_column_css() {
     echo '<style>
         .column-order { width: 60px; text-align: center; }
         .column-thumbnail { width: 80px; }
         .column-thumbnail img { border-radius: 4px; }
+        .column-year { width: 80px; }
+        .column-price { width: 150px; }
+        .obraz-price-edit {
+            display: none;
+            margin-top: 5px;
+        }
+        .obraz-price-edit input {
+            width: 80px;
+            margin-right: 5px;
+        }
     </style>';
 }
 add_action('admin_head', 'obraz_admin_column_css');
@@ -229,6 +265,7 @@ function obraz_admin_scripts() {
         jQuery(document).ready(function($) {
             var $table = $('.wp-list-table tbody');
 
+            // Drag & Drop sorting
             $table.sortable({
                 items: 'tr',
                 cursor: 'move',
@@ -276,6 +313,112 @@ function obraz_admin_scripts() {
                     });
                 }
             });
+
+            // Inline price edit
+            $(document).on('click', '.obraz-edit-price', function(e) {
+                e.preventDefault();
+                var $button = $(this);
+                var $cell = $button.closest('td');
+                var $display = $cell.find('.obraz-price-display');
+                var postId = $button.data('post-id');
+                var currentPrice = $display.data('price') || '';
+
+                // Check if edit form already exists
+                if ($cell.find('.obraz-price-edit').length > 0) {
+                    return;
+                }
+
+                // Hide display and button
+                $display.hide();
+                $button.hide();
+
+                // Create edit form
+                var $editForm = $('<div class="obraz-price-edit"></div>');
+                $editForm.append('<input type="number" class="obraz-price-input" value="' + currentPrice + '" placeholder="Cena" step="1" min="0">');
+                $editForm.append('<button type="button" class="button button-small obraz-save-price">Zapisz</button>');
+                $editForm.append('<button type="button" class="button button-small obraz-cancel-price">Anuluj</button>');
+
+                $cell.append($editForm);
+                $editForm.show();
+                $editForm.find('.obraz-price-input').focus();
+
+                // Save on Enter
+                $editForm.find('.obraz-price-input').on('keypress', function(e) {
+                    if (e.which === 13) {
+                        $editForm.find('.obraz-save-price').click();
+                    }
+                });
+            });
+
+            // Save price
+            $(document).on('click', '.obraz-save-price', function() {
+                var $button = $(this);
+                var $cell = $button.closest('td');
+                var $editForm = $cell.find('.obraz-price-edit');
+                var $input = $editForm.find('.obraz-price-input');
+                var $display = $cell.find('.obraz-price-display');
+                var $editButton = $cell.find('.obraz-edit-price');
+                var postId = $editButton.data('post-id');
+                var newPrice = $input.val().trim();
+
+                // Disable button during save
+                $button.prop('disabled', true).text('Zapisywanie...');
+
+                // Save via AJAX
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'update_obraz_price',
+                        post_id: postId,
+                        price: newPrice,
+                        nonce: '<?php echo wp_create_nonce('obraz_price_nonce'); ?>'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            // Update display
+                            $display.data('price', newPrice);
+                            if (newPrice) {
+                                $display.html(newPrice + ' zł').css('color', '');
+                                $editButton.text('Edytuj');
+                            } else {
+                                $display.html('sprzedany').css('color', '#999');
+                                $editButton.text('Ustaw cenę');
+                            }
+
+                            // Remove edit form
+                            $editForm.remove();
+
+                            // Show display and button
+                            $display.show();
+                            $editButton.show();
+                        } else {
+                            alert('Błąd: ' + (response.data || 'Nie udało się zapisać ceny'));
+                            $button.prop('disabled', false).text('Zapisz');
+                        }
+                    },
+                    error: function() {
+                        alert('Błąd połączenia. Spróbuj ponownie.');
+                        $button.prop('disabled', false).text('Zapisz');
+                    }
+                });
+            });
+
+            // Cancel price edit
+            $(document).on('click', '.obraz-cancel-price', function() {
+                var $button = $(this);
+                var $cell = $button.closest('td');
+                var $editForm = $cell.find('.obraz-price-edit');
+                var $display = $cell.find('.obraz-price-display');
+                var $editButton = $cell.find('.obraz-edit-price');
+
+                // Remove edit form
+                $editForm.remove();
+
+                // Show display and button
+                $display.show();
+                $editButton.show();
+            });
         });
         </script>
         <?php
@@ -308,3 +451,39 @@ function update_obraz_order_ajax() {
     wp_send_json_success('Order updated');
 }
 add_action('wp_ajax_update_obraz_order', 'update_obraz_order_ajax');
+
+/**
+ * AJAX handler for updating price inline
+ */
+function update_obraz_price_ajax() {
+    check_ajax_referer('obraz_price_nonce', 'nonce');
+
+    if (!current_user_can('edit_posts')) {
+        wp_send_json_error('Brak uprawnień');
+    }
+
+    $post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
+    $price = isset($_POST['price']) ? sanitize_text_field($_POST['price']) : '';
+
+    if (!$post_id) {
+        wp_send_json_error('Nieprawidłowy ID posta');
+    }
+
+    // Get existing ACF field group
+    $o_obrazie = get_field('o_obrazie', $post_id);
+    if (!is_array($o_obrazie)) {
+        $o_obrazie = [];
+    }
+
+    // Update only the price field
+    $o_obrazie['cena_obrazu'] = $price;
+
+    // Save back to ACF
+    update_field('o_obrazie', $o_obrazie, $post_id);
+
+    wp_send_json_success([
+        'message' => 'Cena zaktualizowana',
+        'price' => $price
+    ]);
+}
+add_action('wp_ajax_update_obraz_price', 'update_obraz_price_ajax');
