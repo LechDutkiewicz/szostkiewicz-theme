@@ -420,14 +420,123 @@
     .obraz-hero {
         padding: calc(var(--obraz-spacing-unit) * 2) var(--obraz-spacing-unit);
     }
-    
+
     .obraz-hero__meta-item {
         flex-direction: column;
         gap: 0.25rem;
     }
-    
+
     .obraz-hero__cta {
         display: block;
         text-align: center;
+    }
+}
+
+/* ==========================================================================
+   Breadcrumbs
+   ========================================================================== */
+
+.breadcrumbs {
+    max-width: var(--obraz-container-width);
+    margin: 0 auto;
+    padding: calc(var(--obraz-spacing-unit) * 1.5) var(--obraz-spacing-unit);
+    font-size: 0.85rem;
+    color: var(--obraz-color-secondary);
+}
+
+.breadcrumbs a {
+    color: var(--obraz-color-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.breadcrumbs a:hover {
+    color: var(--obraz-color-primary);
+}
+
+.breadcrumbs__separator {
+    margin: 0 0.5rem;
+}
+
+.breadcrumbs__current {
+    color: var(--obraz-color-primary);
+}
+
+/* ==========================================================================
+   Contact Links (Messenger & WhatsApp)
+   ========================================================================== */
+
+.obraz-hero__contact {
+    margin-top: calc(var(--obraz-spacing-unit) * 2);
+    padding-top: calc(var(--obraz-spacing-unit) * 2);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.obraz-hero__contact-title {
+    font-family: var(--obraz-font-serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin: 0 0 calc(var(--obraz-spacing-unit) * 1.5) 0;
+}
+
+.obraz-hero__contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--obraz-spacing-unit);
+}
+
+.contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: calc(var(--obraz-spacing-unit) * 0.75) calc(var(--obraz-spacing-unit) * 1.5);
+    border: 1px solid var(--obraz-color-border);
+    background: transparent;
+    color: var(--obraz-color-primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.contact-link:hover {
+    background: var(--obraz-color-primary);
+    color: var(--obraz-color-bg);
+}
+
+.contact-link svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.contact-link--messenger:hover {
+    background: #0084FF;
+    border-color: #0084FF;
+}
+
+.contact-link--whatsapp:hover {
+    background: #25D366;
+    border-color: #25D366;
+}
+
+/* ==========================================================================
+   Sold Status
+   ========================================================================== */
+
+.obraz-hero__meta-item--cena .sold {
+    color: #999;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 480px) {
+    .obraz-hero__contact-links {
+        flex-direction: column;
+    }
+
+    .contact-link {
+        justify-content: center;
     }
 }

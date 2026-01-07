@@ -87,6 +87,12 @@
     text-align: right;
 }
 
+.painting-item .price--sold {
+    color: #999;
+    font-style: italic;
+    font-weight: 400;
+}
+
 /* PAGINATION - matching slider navigation design */
 .pagination {
     margin-top: 3em;
