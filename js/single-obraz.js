@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (typeof window.PhotoSwipeLightbox !== 'undefined' && typeof window.PhotoSwipe !== 'undefined') {
             const lightbox = new window.PhotoSwipeLightbox({
                 gallery: '.pswp-gallery',
-                children: 'a',
+                children: '.pswp-gallery__item',
                 pswpModule: window.PhotoSwipe,
 
                 // Zoom options

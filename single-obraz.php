@@ -58,8 +58,10 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
                             }
                             ?>
                             <a href="<?php echo esc_url($target_url); ?>"
+                               data-pswp-src="<?php echo esc_url($target_url); ?>"
                                data-pswp-width="<?php echo $width; ?>"
-                               data-pswp-height="<?php echo $height; ?>">
+                               data-pswp-height="<?php echo $height; ?>"
+                               class="pswp-gallery__item">
                                 <img src="<?php echo esc_url($galeria[0]['url']); ?>"
                                      alt="<?php echo esc_attr($galeria[0]['alt'] ?: get_the_title()); ?>"
                                      loading="eager"
@@ -92,8 +94,10 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
                                     ?>
                                     <div class="swiper-slide">
                                         <a href="<?php echo esc_url($target_url); ?>"
+                                           data-pswp-src="<?php echo esc_url($target_url); ?>"
                                            data-pswp-width="<?php echo $width; ?>"
-                                           data-pswp-height="<?php echo $height; ?>">
+                                           data-pswp-height="<?php echo $height; ?>"
+                                           class="pswp-gallery__item">
                                             <img src="<?php echo esc_url($image['url']); ?>"
                                                  alt="<?php echo esc_attr($image['alt'] ?: get_the_title()); ?>"
                                                  loading="lazy"
@@ -131,8 +135,10 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
                         }
                         ?>
                         <a href="<?php echo esc_url($target_url); ?>"
+                           data-pswp-src="<?php echo esc_url($target_url); ?>"
                            data-pswp-width="<?php echo $width; ?>"
-                           data-pswp-height="<?php echo $height; ?>">
+                           data-pswp-height="<?php echo $height; ?>"
+                           class="pswp-gallery__item">
                             <img src="<?php echo esc_url($large_url); ?>"
                                  alt="<?php echo esc_attr(get_the_title()); ?>"
                                  loading="eager"
