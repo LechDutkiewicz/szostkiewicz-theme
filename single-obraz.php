@@ -25,7 +25,7 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
         <span class="breadcrumbs__separator">/</span>
         <a href="<?php echo esc_url(get_post_type_archive_link('obraz')); ?>">Galeria</a>
         <span class="breadcrumbs__separator">/</span>
-        <span class="breadcrumbs__current"><?php the_title(); ?></span>
+        <span class="breadcrumbs__current">obraz</span>
     </nav>
 
     <!-- SEKCJA 1: Hero z obrazem -->
@@ -85,7 +85,7 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
                     <span class="obraz-hero__kolekcja"><?php echo $kolekcja_name; ?></span>
                 <?php endif; ?>
 
-                <h1 class="obraz-hero__title"><?php the_title(); ?></h1>
+                <h1 class="h5"><?php the_title(); ?></h1>
 
                 <?php if ($metadata['description']): ?>
                     <div class="obraz-hero__opis">
@@ -136,7 +136,7 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
 
                 <?php if ($contact_links['messenger'] || $contact_links['whatsapp']): ?>
                     <div class="obraz-hero__contact">
-                        <h3 class="obraz-hero__contact-title">Napisz do mnie</h3>
+                        <h2 class="h6">Napisz do mnie</h2>
                         <div class="obraz-hero__contact-links">
                             <?php if ($contact_links['messenger']): ?>
                                 <a href="<?php echo $contact_links['messenger']; ?>" class="contact-link contact-link--messenger" target="_blank" rel="noopener">
