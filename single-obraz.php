@@ -38,37 +38,69 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
 
                     <?php if (count($galeria) === 1): ?>
                         <!-- Pojedynczy obraz z galerii ACF -->
-                        <div class="obraz-hero__single-image">
+                        <div class="obraz-hero__single-image pswp-gallery">
                             <?php
+                            $image_id = $galeria[0]['ID'];
                             $full_url = $galeria[0]['url'];
-                            $mobile_url = wp_get_attachment_image_url($galeria[0]['ID'], 'medium_large') ?: $full_url;
+                            $mobile_url = wp_get_attachment_image_url($image_id, 'medium_large') ?: $full_url;
+                            $is_mobile = wp_is_mobile();
+                            $target_url = $is_mobile ? $mobile_url : $full_url;
+
+                            // Get image dimensions for target URL
+                            $metadata = wp_get_attachment_metadata($image_id);
+                            if ($is_mobile) {
+                                $size_data = wp_get_attachment_image_src($image_id, 'medium_large');
+                                $width = $size_data[1];
+                                $height = $size_data[2];
+                            } else {
+                                $width = $metadata['width'] ?? 1200;
+                                $height = $metadata['height'] ?? 900;
+                            }
                             ?>
-                            <img src="<?php echo esc_url($galeria[0]['url']); ?>"
-                                 alt="<?php echo esc_attr($galeria[0]['alt'] ?: get_the_title()); ?>"
-                                 class="lightbox-image"
-                                 data-full="<?php echo esc_url($full_url); ?>"
-                                 data-mobile="<?php echo esc_url($mobile_url); ?>"
-                                 loading="eager"
-                                 style="cursor: pointer;">
+                            <a href="<?php echo esc_url($target_url); ?>"
+                               data-pswp-width="<?php echo $width; ?>"
+                               data-pswp-height="<?php echo $height; ?>"
+                               target="_blank">
+                                <img src="<?php echo esc_url($galeria[0]['url']); ?>"
+                                     alt="<?php echo esc_attr($galeria[0]['alt'] ?: get_the_title()); ?>"
+                                     loading="eager"
+                                     style="cursor: pointer;">
+                            </a>
                         </div>
 
                     <?php else: ?>
                         <!-- Swiper galeria (wiele obrazów) -->
-                        <div class="swiper obraz-swiper">
+                        <div class="swiper obraz-swiper pswp-gallery">
                             <div class="swiper-wrapper">
                                 <?php foreach ($galeria as $image): ?>
                                     <?php
+                                    $image_id = $image['ID'];
                                     $full_url = $image['url'];
-                                    $mobile_url = wp_get_attachment_image_url($image['ID'], 'medium_large') ?: $full_url;
+                                    $mobile_url = wp_get_attachment_image_url($image_id, 'medium_large') ?: $full_url;
+                                    $is_mobile = wp_is_mobile();
+                                    $target_url = $is_mobile ? $mobile_url : $full_url;
+
+                                    // Get image dimensions
+                                    $metadata = wp_get_attachment_metadata($image_id);
+                                    if ($is_mobile) {
+                                        $size_data = wp_get_attachment_image_src($image_id, 'medium_large');
+                                        $width = $size_data[1];
+                                        $height = $size_data[2];
+                                    } else {
+                                        $width = $metadata['width'] ?? 1200;
+                                        $height = $metadata['height'] ?? 900;
+                                    }
                                     ?>
                                     <div class="swiper-slide">
-                                        <img src="<?php echo esc_url($image['url']); ?>"
-                                             alt="<?php echo esc_attr($image['alt'] ?: get_the_title()); ?>"
-                                             class="lightbox-image"
-                                             data-full="<?php echo esc_url($full_url); ?>"
-                                             data-mobile="<?php echo esc_url($mobile_url); ?>"
-                                             loading="lazy"
-                                             style="cursor: pointer;">
+                                        <a href="<?php echo esc_url($target_url); ?>"
+                                           data-pswp-width="<?php echo $width; ?>"
+                                           data-pswp-height="<?php echo $height; ?>"
+                                           target="_blank">
+                                            <img src="<?php echo esc_url($image['url']); ?>"
+                                                 alt="<?php echo esc_attr($image['alt'] ?: get_the_title()); ?>"
+                                                 loading="lazy"
+                                                 style="cursor: pointer;">
+                                        </a>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -80,20 +112,35 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
 
                 <?php elseif (has_post_thumbnail()): ?>
                     <!-- Fallback do Featured Image -->
-                    <div class="obraz-hero__single-image">
+                    <div class="obraz-hero__single-image pswp-gallery">
                         <?php
                         $thumbnail_id = get_post_thumbnail_id();
                         $full_url = wp_get_attachment_image_url($thumbnail_id, 'full');
                         $mobile_url = wp_get_attachment_image_url($thumbnail_id, 'medium_large') ?: $full_url;
                         $large_url = wp_get_attachment_image_url($thumbnail_id, 'large');
+                        $is_mobile = wp_is_mobile();
+                        $target_url = $is_mobile ? $mobile_url : $full_url;
+
+                        // Get image dimensions
+                        $metadata = wp_get_attachment_metadata($thumbnail_id);
+                        if ($is_mobile) {
+                            $size_data = wp_get_attachment_image_src($thumbnail_id, 'medium_large');
+                            $width = $size_data[1];
+                            $height = $size_data[2];
+                        } else {
+                            $width = $metadata['width'] ?? 1200;
+                            $height = $metadata['height'] ?? 900;
+                        }
                         ?>
-                        <img src="<?php echo esc_url($large_url); ?>"
-                             alt="<?php echo esc_attr(get_the_title()); ?>"
-                             class="lightbox-image"
-                             data-full="<?php echo esc_url($full_url); ?>"
-                             data-mobile="<?php echo esc_url($mobile_url); ?>"
-                             loading="eager"
-                             style="cursor: pointer;">
+                        <a href="<?php echo esc_url($target_url); ?>"
+                           data-pswp-width="<?php echo $width; ?>"
+                           data-pswp-height="<?php echo $height; ?>"
+                           target="_blank">
+                            <img src="<?php echo esc_url($large_url); ?>"
+                                 alt="<?php echo esc_attr(get_the_title()); ?>"
+                                 loading="eager"
+                                 style="cursor: pointer;">
+                        </a>
                     </div>
 
                 <?php else: ?>

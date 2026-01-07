@@ -86,30 +86,34 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // GLightbox initialization for image zoom/lightbox
-    const lightboxImages = document.querySelectorAll('.lightbox-image');
+    // Photoswipe initialization for image zoom/lightbox
+    if (typeof PhotoSwipeLightbox !== 'undefined') {
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: '.pswp-gallery',
+            children: 'a',
+            pswpModule: PhotoSwipe,
 
-    if (lightboxImages.length > 0 && typeof GLightbox !== 'undefined') {
-        // Set appropriate image URL based on screen size
-        lightboxImages.forEach(img => {
-            const fullUrl = img.dataset.full;
-            const mobileUrl = img.dataset.mobile;
-            const isMobile = window.innerWidth < 1024;
-            const targetUrl = isMobile ? mobileUrl : fullUrl;
+            // Zoom options
+            zoom: true,
+            maxZoomLevel: 4, // Allow 4x zoom
+            initialZoomLevel: 'fit', // Fit entire image to viewport initially
+            secondaryZoomLevel: 2, // Double-click zooms to 2x
 
-            // Set data-glightbox attribute with href
-            img.setAttribute('data-glightbox', `href: ${targetUrl}`);
+            // UI options
+            showHideAnimationDuration: 333,
+            closeOnVerticalDrag: true,
+            pinchToClose: true,
+
+            // Controls
+            closeTitle: 'Zamknij (Esc)',
+            zoomTitle: 'Powiększ',
+            arrowPrevTitle: 'Poprzedni',
+            arrowNextTitle: 'Następny',
+
+            // Padding around image
+            padding: { top: 50, bottom: 50, left: 50, right: 50 },
         });
 
-        // Initialize GLightbox
-        const lightbox = GLightbox({
-            selector: '.lightbox-image',
-            touchNavigation: true,
-            loop: lightboxImages.length > 1, // Only loop if multiple images
-            zoomable: true,
-            draggable: true,
-            closeButton: true,
-            closeOnOutsideClick: true,
-        });
+        lightbox.init();
     }
 });

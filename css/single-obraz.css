@@ -72,9 +72,15 @@
 .obraz-swiper {
     background: linear-gradient(135deg, #f5e6e0 0%, #e8d5cf 100%);
     padding: calc(var(--obraz-spacing-unit) * 2);
-    box-shadow: 
+    box-shadow:
         20px 20px 60px rgba(0, 0, 0, 0.05),
         -5px -5px 20px rgba(255, 255, 255, 0.8);
+}
+
+.obraz-hero__single-image a,
+.obraz-swiper a {
+    display: block;
+    text-decoration: none;
 }
 
 .obraz-hero__single-image img,
@@ -83,6 +89,7 @@
     height: auto;
     object-fit: contain;
     max-height: 600px;
+    display: block;
 }
 
 .obraz-hero__no-image {
