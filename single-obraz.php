@@ -47,20 +47,19 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
                             $target_url = $is_mobile ? $mobile_url : $full_url;
 
                             // Get image dimensions for target URL
-                            $metadata = wp_get_attachment_metadata($image_id);
+                            $image_metadata = wp_get_attachment_metadata($image_id);
                             if ($is_mobile) {
                                 $size_data = wp_get_attachment_image_src($image_id, 'medium_large');
                                 $width = $size_data[1];
                                 $height = $size_data[2];
                             } else {
-                                $width = $metadata['width'] ?? 1200;
-                                $height = $metadata['height'] ?? 900;
+                                $width = $image_metadata['width'] ?? 1200;
+                                $height = $image_metadata['height'] ?? 900;
                             }
                             ?>
                             <a href="<?php echo esc_url($target_url); ?>"
                                data-pswp-width="<?php echo $width; ?>"
-                               data-pswp-height="<?php echo $height; ?>"
-                               target="_blank">
+                               data-pswp-height="<?php echo $height; ?>">
                                 <img src="<?php echo esc_url($galeria[0]['url']); ?>"
                                      alt="<?php echo esc_attr($galeria[0]['alt'] ?: get_the_title()); ?>"
                                      loading="eager"
@@ -81,21 +80,20 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
                                     $target_url = $is_mobile ? $mobile_url : $full_url;
 
                                     // Get image dimensions
-                                    $metadata = wp_get_attachment_metadata($image_id);
+                                    $image_metadata = wp_get_attachment_metadata($image_id);
                                     if ($is_mobile) {
                                         $size_data = wp_get_attachment_image_src($image_id, 'medium_large');
                                         $width = $size_data[1];
                                         $height = $size_data[2];
                                     } else {
-                                        $width = $metadata['width'] ?? 1200;
-                                        $height = $metadata['height'] ?? 900;
+                                        $width = $image_metadata['width'] ?? 1200;
+                                        $height = $image_metadata['height'] ?? 900;
                                     }
                                     ?>
                                     <div class="swiper-slide">
                                         <a href="<?php echo esc_url($target_url); ?>"
                                            data-pswp-width="<?php echo $width; ?>"
-                                           data-pswp-height="<?php echo $height; ?>"
-                                           target="_blank">
+                                           data-pswp-height="<?php echo $height; ?>">
                                             <img src="<?php echo esc_url($image['url']); ?>"
                                                  alt="<?php echo esc_attr($image['alt'] ?: get_the_title()); ?>"
                                                  loading="lazy"
@@ -122,20 +120,19 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
                         $target_url = $is_mobile ? $mobile_url : $full_url;
 
                         // Get image dimensions
-                        $metadata = wp_get_attachment_metadata($thumbnail_id);
+                        $image_metadata = wp_get_attachment_metadata($thumbnail_id);
                         if ($is_mobile) {
                             $size_data = wp_get_attachment_image_src($thumbnail_id, 'medium_large');
                             $width = $size_data[1];
                             $height = $size_data[2];
                         } else {
-                            $width = $metadata['width'] ?? 1200;
-                            $height = $metadata['height'] ?? 900;
+                            $width = $image_metadata['width'] ?? 1200;
+                            $height = $image_metadata['height'] ?? 900;
                         }
                         ?>
                         <a href="<?php echo esc_url($target_url); ?>"
                            data-pswp-width="<?php echo $width; ?>"
-                           data-pswp-height="<?php echo $height; ?>"
-                           target="_blank">
+                           data-pswp-height="<?php echo $height; ?>">
                             <img src="<?php echo esc_url($large_url); ?>"
                                  alt="<?php echo esc_attr(get_the_title()); ?>"
                                  loading="eager"
