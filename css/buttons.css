@@ -11,3 +11,11 @@
 .button--cta .elementor-button:active {
     box-shadow: var(--shadow-elevation-medium);
 }
+
+/* Remove all shadows from buttons */
+.noshadow .elementor-button,
+.noshadow .elementor-button:hover,
+.noshadow .elementor-button:active,
+.noshadow .elementor-button:focus {
+    box-shadow: none !important;
+}
