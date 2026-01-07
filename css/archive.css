@@ -87,20 +87,6 @@
     text-align: right;
 }
 
-@media screen and (min-width: 768px) {
-    .painting-item .dimensions {
-        font-size: var(--text-small-font-size-desktop);
-    }
-
-    .painting-item .description {
-        font-size: var(--text-small-font-size-desktop);
-    }
-
-    .painting-item .price {
-        font-size: var(--h6-font-size-desktop);
-    }
-}
-
 /* PAGINATION - matching slider navigation design */
 .pagination {
     margin-top: 3em;

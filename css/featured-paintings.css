@@ -14,11 +14,33 @@
     /* No padding - full width */
 }
 
-/* Swiper Slide - Peek Effect (opacity managed by JS) */
+/* Swiper Slide - Default opacity for peek slides */
 .featured-paintings-swiper .swiper-slide {
     opacity: 0.5;
     transition: opacity 0.3s ease;
     width: auto;
+}
+
+/* Mobile - only active slide fully visible */
+.featured-paintings-swiper .swiper-slide-active {
+    opacity: 1;
+}
+
+/* Tablet (768px+) - 2 visible slides with full opacity */
+@media screen and (min-width: 768px) {
+    .featured-paintings-swiper .swiper-slide-active,
+    .featured-paintings-swiper .swiper-slide-active + .swiper-slide {
+        opacity: 1;
+    }
+}
+
+/* Desktop (1024px+) - 3 visible slides with full opacity */
+@media screen and (min-width: 1024px) {
+    .featured-paintings-swiper .swiper-slide-active,
+    .featured-paintings-swiper .swiper-slide-active + .swiper-slide,
+    .featured-paintings-swiper .swiper-slide-active + .swiper-slide + .swiper-slide {
+        opacity: 1;
+    }
 }
 
 /* Painting item in slider - Mobile */
