@@ -87,13 +87,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Photoswipe initialization for image zoom/lightbox
-    // Wait for PhotoSwipe to be available (loaded from CDN)
-    const initPhotoSwipe = () => {
-        if (typeof window.PhotoSwipeLightbox !== 'undefined' && typeof window.PhotoSwipe !== 'undefined') {
-            const lightbox = new window.PhotoSwipeLightbox({
+    // Dynamic import for ES modules
+    const initPhotoSwipe = async () => {
+        try {
+            const [PhotoSwipeModule, PhotoSwipeLightboxModule] = await Promise.all([
+                import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe.esm.min.js'),
+                import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe-lightbox.esm.min.js')
+            ]);
+
+            const PhotoSwipe = PhotoSwipeModule.default;
+            const PhotoSwipeLightbox = PhotoSwipeLightboxModule.default;
+
+            const lightbox = new PhotoSwipeLightbox({
                 gallery: '.pswp-gallery',
                 children: '.pswp-gallery__item',
-                pswpModule: window.PhotoSwipe,
+                pswpModule: PhotoSwipe,
 
                 // Zoom options
                 zoom: true,
@@ -118,9 +126,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             lightbox.init();
             console.log('PhotoSwipe initialized successfully');
-        } else {
-            // Retry after a short delay if PhotoSwipe isn't loaded yet
-            setTimeout(initPhotoSwipe, 100);
+        } catch (error) {
+            console.error('Failed to load PhotoSwipe:', error);
         }
     };
 

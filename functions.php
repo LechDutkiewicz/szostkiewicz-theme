@@ -96,36 +96,22 @@ function child_assets() {
         true
     );
 
-    // Enqueue Photoswipe (for lightbox/zoom with controls)
-    wp_enqueue_style(
-        'photoswipe',
-        'https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe.css',
-        [],
-        '5.4.3'
-    );
-
-    wp_enqueue_script(
-        'photoswipe',
-        'https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe.umd.min.js',
-        [],
-        '5.4.3',
-        true
-    );
-
-    wp_enqueue_script(
-        'photoswipe-lightbox',
-        'https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe-lightbox.umd.min.js',
-        ['photoswipe'],
-        '5.4.3',
-        true
-    );
+    // Enqueue Photoswipe CSS only (JS loaded via dynamic import in single-obraz.js)
+    if (is_singular('obraz')) {
+        wp_enqueue_style(
+            'photoswipe',
+            'https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe.css',
+            [],
+            '5.4.3'
+        );
+    }
 
     // Enqueue single-obraz.js (for single painting pages)
     if (is_singular('obraz')) {
         wp_enqueue_script(
             'child-theme-single-obraz',
             get_stylesheet_directory_uri() . '/js/single-obraz.js',
-            ['swiper', 'photoswipe', 'photoswipe-lightbox'],
+            ['swiper'],
             HELLO_ELEMENTOR_CHILD_VERSION,
             true
         );
