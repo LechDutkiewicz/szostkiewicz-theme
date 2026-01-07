@@ -87,33 +87,43 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Photoswipe initialization for image zoom/lightbox
-    if (typeof PhotoSwipeLightbox !== 'undefined') {
-        const lightbox = new PhotoSwipeLightbox({
-            gallery: '.pswp-gallery',
-            children: 'a',
-            pswpModule: PhotoSwipe,
+    // Wait for PhotoSwipe to be available (loaded from CDN)
+    const initPhotoSwipe = () => {
+        if (typeof window.PhotoSwipeLightbox !== 'undefined' && typeof window.PhotoSwipe !== 'undefined') {
+            const lightbox = new window.PhotoSwipeLightbox({
+                gallery: '.pswp-gallery',
+                children: 'a',
+                pswpModule: window.PhotoSwipe,
 
-            // Zoom options
-            zoom: true,
-            maxZoomLevel: 4, // Allow 4x zoom
-            initialZoomLevel: 'fit', // Fit entire image to viewport initially
-            secondaryZoomLevel: 2, // Double-click zooms to 2x
+                // Zoom options
+                zoom: true,
+                maxZoomLevel: 4, // Allow 4x zoom
+                initialZoomLevel: 'fit', // Fit entire image to viewport initially
+                secondaryZoomLevel: 2, // Double-click zooms to 2x
 
-            // UI options
-            showHideAnimationDuration: 333,
-            closeOnVerticalDrag: true,
-            pinchToClose: true,
+                // UI options
+                showHideAnimationDuration: 333,
+                closeOnVerticalDrag: true,
+                pinchToClose: true,
 
-            // Controls
-            closeTitle: 'Zamknij (Esc)',
-            zoomTitle: 'Powiększ',
-            arrowPrevTitle: 'Poprzedni',
-            arrowNextTitle: 'Następny',
+                // Controls
+                closeTitle: 'Zamknij (Esc)',
+                zoomTitle: 'Powiększ',
+                arrowPrevTitle: 'Poprzedni',
+                arrowNextTitle: 'Następny',
 
-            // Padding around image
-            padding: { top: 50, bottom: 50, left: 50, right: 50 },
-        });
+                // Padding around image
+                padding: { top: 50, bottom: 50, left: 50, right: 50 },
+            });
 
-        lightbox.init();
-    }
+            lightbox.init();
+            console.log('PhotoSwipe initialized successfully');
+        } else {
+            // Retry after a short delay if PhotoSwipe isn't loaded yet
+            setTimeout(initPhotoSwipe, 100);
+        }
+    };
+
+    // Initialize PhotoSwipe
+    initPhotoSwipe();
 });
