@@ -19,6 +19,27 @@
 	/* Text sizes - Mobile values */
 	--text-small-font-size: .86956521739em;
 	--text-tiny-font-size: .75614366729em;
+
+	/* Shadows */
+	--shadow-color: 0deg 0% 63%;
+	--shadow-elevation-low:
+		0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.21),
+		0.4px 0.9px 1.3px -0.7px hsl(var(--shadow-color) / 0.3),
+		1px 2px 2.9px -1.5px hsl(var(--shadow-color) / 0.39);
+	--shadow-elevation-medium:
+		0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.22),
+		1px 2px 2.9px -0.5px hsl(var(--shadow-color) / 0.29),
+		2.2px 4.4px 6.3px -1px hsl(var(--shadow-color) / 0.36),
+		5px 10px 14.3px -1.5px hsl(var(--shadow-color) / 0.43);
+	--shadow-elevation-high:
+		0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.2),
+		1.9px 3.8px 5.4px -0.2px hsl(var(--shadow-color) / 0.23),
+		3.5px 7px 10px -0.4px hsl(var(--shadow-color) / 0.27),
+		5.4px 10.8px 15.4px -0.6px hsl(var(--shadow-color) / 0.3),
+		8.1px 16.1px 23px -0.9px hsl(var(--shadow-color) / 0.34),
+		11.9px 23.8px 33.9px -1.1px hsl(var(--shadow-color) / 0.37),
+		17.4px 34.9px 49.7px -1.3px hsl(var(--shadow-color) / 0.4),
+		25px 50px 71.3px -1.5px hsl(var(--shadow-color) / 0.44);
 }
 
 /* Desktop values */

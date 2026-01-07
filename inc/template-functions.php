@@ -69,7 +69,7 @@ function render_painting_card($post_id = null, $args = []) {
         'show_description' => true,
         'link' => true,
         'image_size' => 'medium',
-        'image_class' => 'shadow-black',
+        'image_class' => 'shadow-elevation-medium',
         'slider_mode' => false,
     ];
 

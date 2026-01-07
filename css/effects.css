@@ -1,8 +1,20 @@
 /* cienie */
 
-.shadow-black {
-	box-shadow: 5px 10px 12.6px 0px rgba(161, 161, 161, 0.34), 2.1px 4.1px 5.2px 0px rgba(161, 161, 161, 0.34), 0.8px 1.6px 2px 0px rgba(161, 161, 161, 0.34), 0.3px 0.5px 0.7px 0px rgba(161, 161, 161, 0.34);
+.shadow-elevation-low {
+	box-shadow: var(--shadow-elevation-low);
+}
 
+.shadow-elevation-medium {
+	box-shadow: var(--shadow-elevation-medium);
+}
+
+.shadow-elevation-high {
+	box-shadow: var(--shadow-elevation-high);
+}
+
+/* Deprecated - use shadow-elevation-medium instead */
+.shadow-black {
+	box-shadow: var(--shadow-elevation-medium);
 }
 
 .shadow-gray-low {
