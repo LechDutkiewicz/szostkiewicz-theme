@@ -1,25 +1,39 @@
 /* zmienne */
 :root {
+	/* Headings - Mobile values */
 	--h1-font-size: 2.313060765625em;
 	--h2-font-size: 2.0113571875em;
 	--h3-font-size: 1.74900625em;
 	--h4-font-size: 1.520875em;
 	--h5-font-size: 1.3225em;
 	--h6-font-size: 1.15em;
-	--h1-font-size-desktop: 5.534900853769em;
-	--h2-font-size-desktop: 4.1615795893em;
-	--h3-font-size-desktop: 3.12900721em;
-	--h4-font-size-desktop: 2.352637em;
-	--h5-font-size-desktop: 1.7689em;
-	--h6-font-size-desktop: 1.33em;
+
+	/* Line heights */
 	--h1-line-height: 1.1em;
 	--h2-line-height: 1.1em;
 	--h3-line-height: 1.2em;
 	--h4-line-height: 1.2em;
 	--h5-line-height: 1.2em;
 	--h6-line-height: 1.2em;
+
+	/* Text sizes - Mobile values */
 	--text-small-font-size: .86956521739em;
 	--text-tiny-font-size: .75614366729em;
-	--text-small-font-size-desktop: .751879699248em;
-	--text-tiny-font-size-desktop: .565323082141em;
+}
+
+/* Desktop values */
+@media (min-width: 768px) {
+	:root {
+		/* Headings - Desktop values */
+		--h1-font-size: 5.534900853769em;
+		--h2-font-size: 4.1615795893em;
+		--h3-font-size: 3.12900721em;
+		--h4-font-size: 2.352637em;
+		--h5-font-size: 1.7689em;
+		--h6-font-size: 1.33em;
+
+		/* Text sizes - Desktop values */
+		--text-small-font-size: .751879699248em;
+		--text-tiny-font-size: .565323082141em;
+	}
 }

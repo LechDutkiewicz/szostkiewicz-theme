@@ -87,16 +87,63 @@
     text-align: right;
 }
 
-@media screen and (min-width: 768px) {
-    .painting-item .dimensions {
-        font-size: var(--text-small-font-size-desktop);
-    }
+/* PAGINATION - matching slider navigation design */
+.pagination {
+    margin-top: 3em;
+}
 
-    .painting-item .description {
-        font-size: var(--text-small-font-size-desktop);
-    }
+.nav-links {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
 
-    .painting-item .price {
-        font-size: var(--h6-font-size-desktop);
-    }
+.page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--e-global-color-primary);
+    color: white;
+    text-decoration: none;
+    font-family: var(--e-global-typography-primary-font-family);
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.page-numbers:hover {
+    background: var(--e-global-color-accent);
+    transform: scale(1.1);
+    color: white;
+}
+
+.page-numbers.current {
+    background: var(--e-global-color-accent);
+    transform: scale(1.15);
+    font-weight: 700;
+}
+
+.page-numbers.dots {
+    background: transparent;
+    color: var(--e-global-color-primary);
+    cursor: default;
+}
+
+.page-numbers.dots:hover {
+    background: transparent;
+    transform: none;
+}
+
+/* Prev/Next buttons with text */
+.page-numbers.prev,
+.page-numbers.next {
+    width: auto;
+    padding: 0 1.5rem;
+    border-radius: 24px;
+    font-size: 14px;
 }
