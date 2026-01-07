@@ -23,12 +23,10 @@ document.addEventListener('DOMContentLoaded', function() {
             768: {
                 slidesPerView: 2.2,
                 spaceBetween: 48,
-                slidesPerGroup: 2,
             },
             1024: {
                 slidesPerView: 3.2,
                 spaceBetween: 64,
-                slidesPerGroup: 3,
             }
         },
 
