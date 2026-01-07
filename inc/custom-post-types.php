@@ -56,7 +56,6 @@ function register_obraz_post_type() {
         'show_in_rest'       => true,
         'supports'           => [
             'title',
-            'editor',
             'thumbnail',
             'custom-fields',
             'page-attributes', // Enables Order field for manual sorting
