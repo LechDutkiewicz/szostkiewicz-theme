@@ -22,7 +22,32 @@ function get_painting_metadata($post_id = null) {
     return [
         'dimensions' => !empty($o_obrazie['wymiary_obrazu']) ? sanitize_text_field($o_obrazie['wymiary_obrazu']) : '',
         'price' => !empty($o_obrazie['cena_obrazu']) ? sanitize_text_field($o_obrazie['cena_obrazu']) : '',
+        'year' => !empty($o_obrazie['rok_powstania']) ? sanitize_text_field($o_obrazie['rok_powstania']) : '',
+        'technique' => !empty($o_obrazie['technika']) ? sanitize_text_field($o_obrazie['technika']) : '',
+        'signature' => !empty($o_obrazie['sygnatura']) ? sanitize_text_field($o_obrazie['sygnatura']) : '',
         'description' => !empty($o_obrazie['opis_obrazu']) ? wp_kses_post($o_obrazie['opis_obrazu']) : '',
+    ];
+}
+
+/**
+ * Get contact links from ACF options
+ *
+ * @return array Contact links (messenger, whatsapp)
+ */
+function get_contact_links() {
+    $messenger = get_field('messenger_link', 'option');
+    $whatsapp_number = get_field('whatsapp_number', 'option');
+
+    $whatsapp_link = '';
+    if ($whatsapp_number) {
+        // Remove spaces and non-numeric characters
+        $whatsapp_number = preg_replace('/[^0-9]/', '', $whatsapp_number);
+        $whatsapp_link = 'https://wa.me/' . $whatsapp_number;
+    }
+
+    return [
+        'messenger' => $messenger ? esc_url($messenger) : '',
+        'whatsapp' => $whatsapp_link ? esc_url($whatsapp_link) : '',
     ];
 }
 
@@ -72,8 +97,12 @@ function render_painting_card($post_id = null, $args = []) {
         printf('<span class="dimensions">%s</span>', esc_html($metadata['dimensions']));
     }
 
-    if ($args['show_price'] && $metadata['price']) {
-        printf('<span class="price">%s</span>', esc_html($metadata['price']));
+    if ($args['show_price']) {
+        if ($metadata['price']) {
+            printf('<span class="price">%s zł</span>', esc_html($metadata['price']));
+        } else {
+            printf('<span class="price price--sold">sprzedany</span>');
+        }
     }
 
     if ($args['show_description'] && $metadata['description']) {
