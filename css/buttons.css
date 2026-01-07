@@ -1,3 +1,13 @@
 .button--cta {
     margin-top: 2em;
 }
+
+.button--cta .elementor-button {
+    box-shadow: var(--shadow-elevation-low);
+    transition: all 0.3s ease;
+}
+
+.button--cta .elementor-button:hover,
+.button--cta .elementor-button:active {
+    box-shadow: var(--shadow-elevation-medium);
+}
