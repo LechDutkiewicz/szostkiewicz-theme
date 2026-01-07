@@ -97,16 +97,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const isMobile = window.innerWidth < 1024;
             const targetUrl = isMobile ? mobileUrl : fullUrl;
 
-            // Set data-glightbox attribute with the appropriate URL
-            img.setAttribute('data-glightbox', 'type: image');
-            img.setAttribute('href', targetUrl);
+            // Set data-glightbox attribute with href
+            img.setAttribute('data-glightbox', `href: ${targetUrl}`);
         });
 
         // Initialize GLightbox
         const lightbox = GLightbox({
             selector: '.lightbox-image',
             touchNavigation: true,
-            loop: true,
+            loop: lightboxImages.length > 1, // Only loop if multiple images
             zoomable: true,
             draggable: true,
             closeButton: true,
