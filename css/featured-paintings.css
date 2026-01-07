@@ -98,7 +98,6 @@
     .featured-paintings-prev:hover,
     .featured-paintings-next:hover {
         background: var(--e-global-color-accent);
-        transform: scale(1.1);
     }
 
     .featured-paintings-prev:disabled,
