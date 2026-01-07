@@ -491,23 +491,19 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    width: 48px;
-    height: 48px;
-    padding: 0;
-    border-radius: 50%;
+    padding: 0.75rem 1.5rem;
+    border-radius: 2em;
     border: none;
-    background: var(--e-global-color-primary);
-    color: white;
+    background: transparent;
+    color: var(--e-global-color-primary);
     text-decoration: none;
-    font-size: 0;
+    font-size: var(--text-small-font-size);
     font-weight: 500;
     transition: all 0.3s ease;
     box-shadow: var(--shadow-elevation-low);
 }
 
 .contact-link:hover {
-    background: var(--e-global-color-accent);
-    color: white;
     box-shadow: var(--shadow-elevation-medium);
 }
 
@@ -519,10 +515,12 @@
 
 .contact-link--messenger:hover {
     background: #0084FF;
+    color: white;
 }
 
 .contact-link--whatsapp:hover {
     background: #25D366;
+    color: white;
 }
 
 /* ==========================================================================

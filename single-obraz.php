@@ -39,9 +39,17 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
                     <?php if (count($galeria) === 1): ?>
                         <!-- Pojedynczy obraz z galerii ACF -->
                         <div class="obraz-hero__single-image">
+                            <?php
+                            $full_url = $galeria[0]['url'];
+                            $mobile_url = wp_get_attachment_image_url($galeria[0]['ID'], 'medium_large') ?: $full_url;
+                            ?>
                             <img src="<?php echo esc_url($galeria[0]['url']); ?>"
                                  alt="<?php echo esc_attr($galeria[0]['alt'] ?: get_the_title()); ?>"
-                                 loading="eager">
+                                 class="lightbox-image"
+                                 data-full="<?php echo esc_url($full_url); ?>"
+                                 data-mobile="<?php echo esc_url($mobile_url); ?>"
+                                 loading="eager"
+                                 style="cursor: pointer;">
                         </div>
 
                     <?php else: ?>
@@ -49,10 +57,18 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
                         <div class="swiper obraz-swiper">
                             <div class="swiper-wrapper">
                                 <?php foreach ($galeria as $image): ?>
+                                    <?php
+                                    $full_url = $image['url'];
+                                    $mobile_url = wp_get_attachment_image_url($image['ID'], 'medium_large') ?: $full_url;
+                                    ?>
                                     <div class="swiper-slide">
                                         <img src="<?php echo esc_url($image['url']); ?>"
                                              alt="<?php echo esc_attr($image['alt'] ?: get_the_title()); ?>"
-                                             loading="lazy">
+                                             class="lightbox-image"
+                                             data-full="<?php echo esc_url($full_url); ?>"
+                                             data-mobile="<?php echo esc_url($mobile_url); ?>"
+                                             loading="lazy"
+                                             style="cursor: pointer;">
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -65,10 +81,19 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
                 <?php elseif (has_post_thumbnail()): ?>
                     <!-- Fallback do Featured Image -->
                     <div class="obraz-hero__single-image">
-                        <?php the_post_thumbnail('large', [
-                            'loading' => 'eager',
-                            'alt' => get_the_title()
-                        ]); ?>
+                        <?php
+                        $thumbnail_id = get_post_thumbnail_id();
+                        $full_url = wp_get_attachment_image_url($thumbnail_id, 'full');
+                        $mobile_url = wp_get_attachment_image_url($thumbnail_id, 'medium_large') ?: $full_url;
+                        $large_url = wp_get_attachment_image_url($thumbnail_id, 'large');
+                        ?>
+                        <img src="<?php echo esc_url($large_url); ?>"
+                             alt="<?php echo esc_attr(get_the_title()); ?>"
+                             class="lightbox-image"
+                             data-full="<?php echo esc_url($full_url); ?>"
+                             data-mobile="<?php echo esc_url($mobile_url); ?>"
+                             loading="eager"
+                             style="cursor: pointer;">
                     </div>
 
                 <?php else: ?>
@@ -134,7 +159,7 @@ $kolekcja_name = $kolekcje && !is_wp_error($kolekcje) ? esc_html($kolekcje[0]->n
                     </div>
                 </dl>
 
-                <?php if ($contact_links['messenger'] || $contact_links['whatsapp']): ?>
+                <?php if (($contact_links['messenger'] || $contact_links['whatsapp']) && $metadata['price']): ?>
                     <div class="obraz-hero__contact">
                         <h2 class="h6">Napisz do mnie</h2>
                         <div class="obraz-hero__contact-links">
