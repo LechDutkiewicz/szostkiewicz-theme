@@ -85,4 +85,32 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
+
+    // GLightbox initialization for image zoom/lightbox
+    const lightboxImages = document.querySelectorAll('.lightbox-image');
+
+    if (lightboxImages.length > 0 && typeof GLightbox !== 'undefined') {
+        // Set appropriate image URL based on screen size
+        lightboxImages.forEach(img => {
+            const fullUrl = img.dataset.full;
+            const mobileUrl = img.dataset.mobile;
+            const isMobile = window.innerWidth < 1024;
+            const targetUrl = isMobile ? mobileUrl : fullUrl;
+
+            // Set data-glightbox attribute with the appropriate URL
+            img.setAttribute('data-glightbox', 'type: image');
+            img.setAttribute('href', targetUrl);
+        });
+
+        // Initialize GLightbox
+        const lightbox = GLightbox({
+            selector: '.lightbox-image',
+            touchNavigation: true,
+            loop: true,
+            zoomable: true,
+            draggable: true,
+            closeButton: true,
+            closeOnOutsideClick: true,
+        });
+    }
 });

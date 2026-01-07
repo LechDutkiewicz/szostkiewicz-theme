@@ -96,12 +96,28 @@ function child_assets() {
         true
     );
 
+    // Enqueue GLightbox (for lightbox/zoom)
+    wp_enqueue_style(
+        'glightbox',
+        'https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css',
+        [],
+        '3.2.0'
+    );
+
+    wp_enqueue_script(
+        'glightbox',
+        'https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js',
+        [],
+        '3.2.0',
+        true
+    );
+
     // Enqueue single-obraz.js (for single painting pages)
     if (is_singular('obraz')) {
         wp_enqueue_script(
             'child-theme-single-obraz',
             get_stylesheet_directory_uri() . '/js/single-obraz.js',
-            ['swiper'],
+            ['swiper', 'glightbox'],
             HELLO_ELEMENTOR_CHILD_VERSION,
             true
         );
