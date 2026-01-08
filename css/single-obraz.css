@@ -588,9 +588,3 @@
 .pswp__button:hover {
     opacity: 1 !important;
 }
-
-/* Fix PhotoSwipe icon rendering */
-.pswp__button svg,
-.pswp__button path {
-    fill: currentColor !important;
-}

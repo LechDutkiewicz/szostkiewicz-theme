@@ -209,25 +209,6 @@ function disable_emojis_remove_dns_prefetch($urls, $relation_type) {
 add_filter('wp_resource_hints', 'disable_emojis_remove_dns_prefetch', 10, 2);
 
 /**
- * Preload critical fonts for better LCP
- */
-function preload_critical_fonts() {
-    // Get Elementor kit ID (usually kit-80 or similar)
-    $kit_id = get_option('elementor_active_kit');
-
-    if (!$kit_id) {
-        return;
-    }
-
-    // Preload Source Sans Pro (body font)
-    echo '<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/sourcesanspro/v22/6xKydSBYKcSV-LCoeQqfX1RYOo3ik4zwmhduz8A.woff2">' . "\n";
-
-    // Preload Playfair Display (heading font)
-    echo '<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/playfairdisplay/v37/nuFkD-vYSZviVYUb_rj3ij__anPXDTnCjmHKM4nYO7KN_qiTbtY.woff2">' . "\n";
-}
-add_action('wp_head', 'preload_critical_fonts', 1);
-
-/**
  * Add cache control headers for static assets
  * Note: LiteSpeed Cache already handles most caching, but these headers help for other scenarios
  * For optimal performance, add the rules from HTACCESS_ADDITIONS.txt to your .htaccess file
