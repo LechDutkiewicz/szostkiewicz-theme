@@ -497,9 +497,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 2em;
+    gap: 0.5em;
+    padding: 1em 2em;
+    border-radius: 5em;
     border: none;
     background: transparent;
     color: var(--e-global-color-primary);
@@ -549,4 +549,48 @@
     .contact-link {
         justify-content: center;
     }
+}
+
+/* ==========================================================================
+   PhotoSwipe Button Overrides (fix Elementor conflicts)
+   ========================================================================== */
+
+/* Reset Elementor button styles for PhotoSwipe controls */
+.pswp__button,
+.pswp__button:hover,
+.pswp__button:focus,
+.pswp__button:active {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    letter-spacing: inherit !important;
+    text-transform: none !important;
+    text-shadow: none !important;
+    border-radius: 0 !important;
+    outline: none !important;
+}
+
+/* Ensure PhotoSwipe buttons display properly */
+.pswp button,
+.pswp__button {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    cursor: pointer !important;
+    opacity: 0.85 !important;
+}
+
+.pswp button:hover,
+.pswp__button:hover {
+    opacity: 1 !important;
+}
+
+/* Fix PhotoSwipe icon rendering */
+.pswp__button svg,
+.pswp__button path {
+    fill: currentColor !important;
 }

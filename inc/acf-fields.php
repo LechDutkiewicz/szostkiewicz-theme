@@ -186,6 +186,18 @@ add_action('acf/include_fields', function() {
                 'required' => 0,
                 'placeholder' => '48123456789',
             ],
+            [
+                'key' => 'field_enable_jquery_frontend',
+                'label' => 'Włącz jQuery na froncie',
+                'name' => 'enable_jquery_frontend',
+                'type' => 'true_false',
+                'instructions' => 'Zaznacz to pole tylko jeśli używasz komponentów Elementora, które wymagają jQuery (np. niektóre widgety). Domyślnie jQuery jest wyłączone dla lepszej wydajności.',
+                'required' => 0,
+                'default_value' => 0,
+                'ui' => 1,
+                'ui_on_text' => 'Włączone',
+                'ui_off_text' => 'Wyłączone',
+            ],
         ],
         'location' => [
             [

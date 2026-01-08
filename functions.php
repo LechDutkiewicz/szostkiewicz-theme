@@ -49,6 +49,14 @@ require_once CHILD_THEME_PATH . 'inc/custom-post-types.php';
 require_once CHILD_THEME_PATH . 'inc/acf-fields.php';
 
 /**
+ * Get asset version based on file modification time for cache busting
+ */
+function get_asset_version($file_path) {
+    $full_path = get_stylesheet_directory() . $file_path;
+    return file_exists($full_path) ? filemtime($full_path) : HELLO_ELEMENTOR_CHILD_VERSION;
+}
+
+/**
  * Enqueue child theme assets
  */
 function child_assets() {
@@ -76,7 +84,7 @@ function child_assets() {
             $handle,
             get_stylesheet_directory_uri() . "/css/{$file}.css",
             $dependency,
-            HELLO_ELEMENTOR_CHILD_VERSION
+            get_asset_version("/css/{$file}.css")
         );
     }
 
@@ -96,37 +104,23 @@ function child_assets() {
         true
     );
 
-    // Enqueue Photoswipe (for lightbox/zoom with controls)
-    wp_enqueue_style(
-        'photoswipe',
-        'https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe.css',
-        [],
-        '5.4.3'
-    );
-
-    wp_enqueue_script(
-        'photoswipe',
-        'https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe.umd.min.js',
-        [],
-        '5.4.3',
-        true
-    );
-
-    wp_enqueue_script(
-        'photoswipe-lightbox',
-        'https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe-lightbox.umd.min.js',
-        ['photoswipe'],
-        '5.4.3',
-        true
-    );
+    // Enqueue Photoswipe CSS only (JS loaded via dynamic import in single-obraz.js)
+    if (is_singular('obraz')) {
+        wp_enqueue_style(
+            'photoswipe',
+            'https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe.css',
+            [],
+            '5.4.3'
+        );
+    }
 
     // Enqueue single-obraz.js (for single painting pages)
     if (is_singular('obraz')) {
         wp_enqueue_script(
             'child-theme-single-obraz',
             get_stylesheet_directory_uri() . '/js/single-obraz.js',
-            ['swiper', 'photoswipe', 'photoswipe-lightbox'],
-            HELLO_ELEMENTOR_CHILD_VERSION,
+            ['swiper'],
+            get_asset_version('/js/single-obraz.js'),
             true
         );
     }
@@ -136,11 +130,46 @@ function child_assets() {
         'child-theme-featured-paintings',
         get_stylesheet_directory_uri() . '/js/featured-paintings.js',
         ['swiper'],
-        HELLO_ELEMENTOR_CHILD_VERSION,
+        get_asset_version('/js/featured-paintings.js'),
         true
     );
 }
 add_action('wp_enqueue_scripts', 'child_assets', 100);
+
+/**
+ * Deregister jQuery on frontend (keep for admin and Elementor editor)
+ * Can be overridden via ACF option in "Kontakt" settings
+ */
+function deregister_jquery_frontend() {
+    // Don't deregister in admin
+    if (is_admin()) {
+        return;
+    }
+
+    // Don't deregister in Elementor preview/editor
+    if (isset($_GET['elementor-preview']) || isset($_GET['elementor_library'])) {
+        return;
+    }
+
+    // Check if Elementor is in preview mode
+    if (class_exists('\Elementor\Plugin')) {
+        if (\Elementor\Plugin::$instance->preview->is_preview_mode()) {
+            return;
+        }
+    }
+
+    // Check ACF option - if enabled, keep jQuery
+    $enable_jquery = get_field('enable_jquery_frontend', 'option');
+    if ($enable_jquery) {
+        return;
+    }
+
+    // Deregister jQuery on frontend for better performance (~30KB saved)
+    wp_deregister_script('jquery');
+    wp_deregister_script('jquery-core');
+    wp_deregister_script('jquery-migrate');
+}
+add_action('wp_enqueue_scripts', 'deregister_jquery_frontend', 100);
 
 /**
  * Shortcode for displaying featured paintings

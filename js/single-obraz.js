@@ -87,33 +87,50 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Photoswipe initialization for image zoom/lightbox
-    if (typeof PhotoSwipeLightbox !== 'undefined') {
-        const lightbox = new PhotoSwipeLightbox({
-            gallery: '.pswp-gallery',
-            children: 'a',
-            pswpModule: PhotoSwipe,
+    // Dynamic import for ES modules
+    const initPhotoSwipe = async () => {
+        try {
+            const [PhotoSwipeModule, PhotoSwipeLightboxModule] = await Promise.all([
+                import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe.esm.min.js'),
+                import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe-lightbox.esm.min.js')
+            ]);
 
-            // Zoom options
-            zoom: true,
-            maxZoomLevel: 4, // Allow 4x zoom
-            initialZoomLevel: 'fit', // Fit entire image to viewport initially
-            secondaryZoomLevel: 2, // Double-click zooms to 2x
+            const PhotoSwipe = PhotoSwipeModule.default;
+            const PhotoSwipeLightbox = PhotoSwipeLightboxModule.default;
 
-            // UI options
-            showHideAnimationDuration: 333,
-            closeOnVerticalDrag: true,
-            pinchToClose: true,
+            const lightbox = new PhotoSwipeLightbox({
+                gallery: '.pswp-gallery',
+                children: '.pswp-gallery__item',
+                pswpModule: PhotoSwipe,
 
-            // Controls
-            closeTitle: 'Zamknij (Esc)',
-            zoomTitle: 'Powiększ',
-            arrowPrevTitle: 'Poprzedni',
-            arrowNextTitle: 'Następny',
+                // Zoom options
+                zoom: true,
+                maxZoomLevel: 4, // Allow 4x zoom
+                initialZoomLevel: 'fit', // Fit entire image to viewport initially
+                secondaryZoomLevel: 2, // Double-click zooms to 2x
 
-            // Padding around image
-            padding: { top: 50, bottom: 50, left: 50, right: 50 },
-        });
+                // UI options
+                showHideAnimationDuration: 333,
+                closeOnVerticalDrag: true,
+                pinchToClose: true,
 
-        lightbox.init();
-    }
+                // Controls
+                closeTitle: 'Zamknij (Esc)',
+                zoomTitle: 'Powiększ',
+                arrowPrevTitle: 'Poprzedni',
+                arrowNextTitle: 'Następny',
+
+                // Padding around image
+                padding: { top: 50, bottom: 50, left: 50, right: 50 },
+            });
+
+            lightbox.init();
+            console.log('PhotoSwipe initialized successfully');
+        } catch (error) {
+            console.error('Failed to load PhotoSwipe:', error);
+        }
+    };
+
+    // Initialize PhotoSwipe
+    initPhotoSwipe();
 });
