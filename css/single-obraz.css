@@ -75,12 +75,14 @@
     box-shadow:
         20px 20px 60px rgba(0, 0, 0, 0.05),
         -5px -5px 20px rgba(255, 255, 255, 0.8);
+    width: 100%; /* Fix: Ensure container has explicit width for Swiper calculations */
 }
 
 .obraz-hero__single-image a,
 .obraz-swiper a {
     display: block;
     text-decoration: none;
+    width: 100%; /* Fix: Ensure links fill container width */
 }
 
 .obraz-hero__single-image img,
@@ -90,6 +92,17 @@
     object-fit: contain;
     max-height: 600px;
     display: block;
+}
+
+/* Fix Swiper slide width calculations */
+.obraz-swiper .swiper-slide {
+    width: 100% !important; /* Override Swiper's incorrect width calculation */
+    flex-shrink: 0;
+}
+
+.obraz-swiper .swiper-wrapper {
+    display: flex;
+    align-items: center;
 }
 
 .obraz-hero__no-image {
@@ -587,10 +600,4 @@
 .pswp button:hover,
 .pswp__button:hover {
     opacity: 1 !important;
-}
-
-/* Fix PhotoSwipe icon rendering */
-.pswp__button svg,
-.pswp__button path {
-    fill: currentColor !important;
 }

@@ -172,6 +172,57 @@ function deregister_jquery_frontend() {
 add_action('wp_enqueue_scripts', 'deregister_jquery_frontend', 100);
 
 /**
+ * Disable WordPress emoji for performance (~5KB saved)
+ */
+function disable_wordpress_emojis() {
+    remove_action('wp_head', 'print_emoji_detection_script', 7);
+    remove_action('admin_print_scripts', 'print_emoji_detection_script');
+    remove_action('wp_print_styles', 'print_emoji_styles');
+    remove_action('admin_print_styles', 'print_emoji_styles');
+    remove_filter('the_content_feed', 'wp_staticize_emoji');
+    remove_filter('comment_text_rss', 'wp_staticize_emoji');
+    remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
+}
+add_action('init', 'disable_wordpress_emojis');
+
+/**
+ * Remove emoji from TinyMCE
+ */
+function disable_emojis_tinymce($plugins) {
+    if (is_array($plugins)) {
+        return array_diff($plugins, array('wpemoji'));
+    }
+    return array();
+}
+add_filter('tiny_mce_plugins', 'disable_emojis_tinymce');
+
+/**
+ * Remove emoji DNS prefetch
+ */
+function disable_emojis_remove_dns_prefetch($urls, $relation_type) {
+    if ('dns-prefetch' == $relation_type) {
+        $emoji_svg_url = apply_filters('emoji_svg_url', 'https://s.w.org/images/core/emoji/2/svg/');
+        $urls = array_diff($urls, array($emoji_svg_url));
+    }
+    return $urls;
+}
+add_filter('wp_resource_hints', 'disable_emojis_remove_dns_prefetch', 10, 2);
+
+/**
+ * Add cache control headers for static assets
+ * Note: LiteSpeed Cache already handles most caching, but these headers help for other scenarios
+ * For optimal performance, add the rules from HTACCESS_ADDITIONS.txt to your .htaccess file
+ */
+function add_cache_headers() {
+    if (!is_admin()) {
+        // 1 year cache for images, fonts, CSS, JS
+        header('Cache-Control: public, max-age=31536000, immutable');
+    }
+}
+// Note: .htaccess mod_expires is more reliable than PHP headers
+// See HTACCESS_ADDITIONS.txt in theme root for .htaccess configuration
+
+/**
  * Shortcode for displaying featured paintings
  *
  * @param array $atts Shortcode attributes

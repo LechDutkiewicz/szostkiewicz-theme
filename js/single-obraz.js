@@ -10,31 +10,28 @@ document.addEventListener('DOMContentLoaded', function() {
     // Image Gallery Swiper (if multiple images)
     const obrazSwiper = document.querySelector('.obraz-swiper');
     if (obrazSwiper) {
+        const slideCount = obrazSwiper.querySelectorAll('.swiper-slide').length;
+
         new Swiper('.obraz-swiper', {
             slidesPerView: 1,
             spaceBetween: 0,
-            loop: true,
-            
+            loop: slideCount > 1, // Only loop if more than 1 slide
+
             // Pagination
             pagination: {
                 el: '.swiper-pagination',
                 clickable: true,
             },
-            
+
             // Navigation arrows
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
-            
+
             // Keyboard control
             keyboard: {
                 enabled: true,
-            },
-            
-            // Lazy loading
-            lazy: {
-                loadPrevNext: true,
             },
         });
     }
