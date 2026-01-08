@@ -229,6 +229,8 @@ add_action('wp_head', 'preload_critical_fonts', 1);
 
 /**
  * Add cache control headers for static assets
+ * Note: LiteSpeed Cache already handles most caching, but these headers help for other scenarios
+ * For optimal performance, add the rules from HTACCESS_ADDITIONS.txt to your .htaccess file
  */
 function add_cache_headers() {
     if (!is_admin()) {
@@ -236,23 +238,8 @@ function add_cache_headers() {
         header('Cache-Control: public, max-age=31536000, immutable');
     }
 }
-// Note: This sets headers but .htaccess is more reliable for static assets
-// Add this to .htaccess for better control:
-/*
-<IfModule mod_expires.c>
-  ExpiresActive On
-  ExpiresByType image/jpg "access plus 1 year"
-  ExpiresByType image/jpeg "access plus 1 year"
-  ExpiresByType image/gif "access plus 1 year"
-  ExpiresByType image/png "access plus 1 year"
-  ExpiresByType image/webp "access plus 1 year"
-  ExpiresByType text/css "access plus 1 month"
-  ExpiresByType application/javascript "access plus 1 month"
-  ExpiresByType application/x-javascript "access plus 1 month"
-  ExpiresByType font/woff "access plus 1 year"
-  ExpiresByType font/woff2 "access plus 1 year"
-</IfModule>
-*/
+// Note: .htaccess mod_expires is more reliable than PHP headers
+// See HTACCESS_ADDITIONS.txt in theme root for .htaccess configuration
 
 /**
  * Shortcode for displaying featured paintings
