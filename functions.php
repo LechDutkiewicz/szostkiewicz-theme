@@ -172,6 +172,89 @@ function deregister_jquery_frontend() {
 add_action('wp_enqueue_scripts', 'deregister_jquery_frontend', 100);
 
 /**
+ * Disable WordPress emoji for performance (~5KB saved)
+ */
+function disable_wordpress_emojis() {
+    remove_action('wp_head', 'print_emoji_detection_script', 7);
+    remove_action('admin_print_scripts', 'print_emoji_detection_script');
+    remove_action('wp_print_styles', 'print_emoji_styles');
+    remove_action('admin_print_styles', 'print_emoji_styles');
+    remove_filter('the_content_feed', 'wp_staticize_emoji');
+    remove_filter('comment_text_rss', 'wp_staticize_emoji');
+    remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
+}
+add_action('init', 'disable_wordpress_emojis');
+
+/**
+ * Remove emoji from TinyMCE
+ */
+function disable_emojis_tinymce($plugins) {
+    if (is_array($plugins)) {
+        return array_diff($plugins, array('wpemoji'));
+    }
+    return array();
+}
+add_filter('tiny_mce_plugins', 'disable_emojis_tinymce');
+
+/**
+ * Remove emoji DNS prefetch
+ */
+function disable_emojis_remove_dns_prefetch($urls, $relation_type) {
+    if ('dns-prefetch' == $relation_type) {
+        $emoji_svg_url = apply_filters('emoji_svg_url', 'https://s.w.org/images/core/emoji/2/svg/');
+        $urls = array_diff($urls, array($emoji_svg_url));
+    }
+    return $urls;
+}
+add_filter('wp_resource_hints', 'disable_emojis_remove_dns_prefetch', 10, 2);
+
+/**
+ * Preload critical fonts for better LCP
+ */
+function preload_critical_fonts() {
+    // Get Elementor kit ID (usually kit-80 or similar)
+    $kit_id = get_option('elementor_active_kit');
+
+    if (!$kit_id) {
+        return;
+    }
+
+    // Preload Source Sans Pro (body font)
+    echo '<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/sourcesanspro/v22/6xKydSBYKcSV-LCoeQqfX1RYOo3ik4zwmhduz8A.woff2">' . "\n";
+
+    // Preload Playfair Display (heading font)
+    echo '<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/playfairdisplay/v37/nuFkD-vYSZviVYUb_rj3ij__anPXDTnCjmHKM4nYO7KN_qiTbtY.woff2">' . "\n";
+}
+add_action('wp_head', 'preload_critical_fonts', 1);
+
+/**
+ * Add cache control headers for static assets
+ */
+function add_cache_headers() {
+    if (!is_admin()) {
+        // 1 year cache for images, fonts, CSS, JS
+        header('Cache-Control: public, max-age=31536000, immutable');
+    }
+}
+// Note: This sets headers but .htaccess is more reliable for static assets
+// Add this to .htaccess for better control:
+/*
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType application/x-javascript "access plus 1 month"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+*/
+
+/**
  * Shortcode for displaying featured paintings
  *
  * @param array $atts Shortcode attributes
