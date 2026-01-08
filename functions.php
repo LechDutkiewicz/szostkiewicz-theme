@@ -49,6 +49,14 @@ require_once CHILD_THEME_PATH . 'inc/custom-post-types.php';
 require_once CHILD_THEME_PATH . 'inc/acf-fields.php';
 
 /**
+ * Get asset version based on file modification time for cache busting
+ */
+function get_asset_version($file_path) {
+    $full_path = get_stylesheet_directory() . $file_path;
+    return file_exists($full_path) ? filemtime($full_path) : HELLO_ELEMENTOR_CHILD_VERSION;
+}
+
+/**
  * Enqueue child theme assets
  */
 function child_assets() {
@@ -76,7 +84,7 @@ function child_assets() {
             $handle,
             get_stylesheet_directory_uri() . "/css/{$file}.css",
             $dependency,
-            HELLO_ELEMENTOR_CHILD_VERSION
+            get_asset_version("/css/{$file}.css")
         );
     }
 
@@ -112,7 +120,7 @@ function child_assets() {
             'child-theme-single-obraz',
             get_stylesheet_directory_uri() . '/js/single-obraz.js',
             ['swiper'],
-            HELLO_ELEMENTOR_CHILD_VERSION,
+            get_asset_version('/js/single-obraz.js'),
             true
         );
     }
@@ -122,7 +130,7 @@ function child_assets() {
         'child-theme-featured-paintings',
         get_stylesheet_directory_uri() . '/js/featured-paintings.js',
         ['swiper'],
-        HELLO_ELEMENTOR_CHILD_VERSION,
+        get_asset_version('/js/featured-paintings.js'),
         true
     );
 }
