@@ -137,6 +137,41 @@ function child_assets() {
 add_action('wp_enqueue_scripts', 'child_assets', 100);
 
 /**
+ * Deregister jQuery on frontend (keep for admin and Elementor editor)
+ * Can be overridden via ACF option in "Kontakt" settings
+ */
+function deregister_jquery_frontend() {
+    // Don't deregister in admin
+    if (is_admin()) {
+        return;
+    }
+
+    // Don't deregister in Elementor preview/editor
+    if (isset($_GET['elementor-preview']) || isset($_GET['elementor_library'])) {
+        return;
+    }
+
+    // Check if Elementor is in preview mode
+    if (class_exists('\Elementor\Plugin')) {
+        if (\Elementor\Plugin::$instance->preview->is_preview_mode()) {
+            return;
+        }
+    }
+
+    // Check ACF option - if enabled, keep jQuery
+    $enable_jquery = get_field('enable_jquery_frontend', 'option');
+    if ($enable_jquery) {
+        return;
+    }
+
+    // Deregister jQuery on frontend for better performance (~30KB saved)
+    wp_deregister_script('jquery');
+    wp_deregister_script('jquery-core');
+    wp_deregister_script('jquery-migrate');
+}
+add_action('wp_enqueue_scripts', 'deregister_jquery_frontend', 100);
+
+/**
  * Shortcode for displaying featured paintings
  *
  * @param array $atts Shortcode attributes
